@@ -1,0 +1,14 @@
+10
+1	One9s	NSA	n3	8	3	6	Ulm
+2	Apple13	NSA	n8	28	5	11	Dallas
+3	Oppo9X	SA	n28	-	4	13	Ulm
+4	Xiaomi12	NSA	n40	40	8	16	Pekin
+5	OnePlus7	SA	n41	-	5	12	Dallas
+6	Samsung21	SA	n77	-	4	8	Krakow
+7	Vivox60	NSA	n28	3	4	10	Pekin
+8	Apple12	SA	n40	-	6	16	Ulm
+9	SamsungS22	NSA	n77	77	8	9	Krakow
+10	OppoX20	NSA	n28	b28	11	13	Warszawa
+
+
+
