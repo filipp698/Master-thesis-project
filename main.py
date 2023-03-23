@@ -1,12 +1,13 @@
 import numpy as np
 import Data
+import Parse
 
 # ścieżki do plików testowych
-pathOrder = "daneTestowe\\daneOrder.txt"
-pathRU = "daneTestowe\\daneRU.txt"
-pathTL = "daneTestowe\\daneTL.txt"
+pathOrder = "Dane\\dane_order.csv"
+pathRU = "Dane\\dane_radia.csv"
+pathTL = "Dane\\dane_testlines.csv"
 #inicjalizacja obiektu i wczytanie danych
-dane = Data.Data()
-dane.importOrder(pathOrder)
-dane.importRU(pathRU)
-dane.importTL(pathTL)
+data = Parse.Parse()
+#data.importOrder(pathOrder)
+data.importTL(pathTL)
+#data.importRU(pathRU)
