@@ -66,6 +66,7 @@ class Parse:
         band4G = []
         nrZam = []
         iloscRU = []
+        add = []
         #Otwarcie pliku csv i odczyt danych
         with open(path, encoding='utf-8-sig') as dane_order:
             reader = csv.DictReader(dane_order, delimiter=";")
@@ -73,19 +74,22 @@ class Parse:
                 band5G.append(line['Pasmo5G'])
                 band4G.append(line['Pasmo4G'])
                 nrZam.append(line['Nrzam'])
+                add.append(line['Dodatkowe5G'])
                 iloscRU.append(len(['Pasmo5G']+['Pasmo4G']))
                 #print("Zamówienie nr: " + line['Nrzam'] + " Band 5G: " + line['Pasmo5G'] + " Band 4G: " + line['Pasmo4G'])
-            print(band5G)
+            #print(band5G)
+            print(band5G[0])
             #Porównanie wartości bandów z kluczem słownikowym i ich zamiana
             for i in range(len(nrZam)):
-                if band5G[i] or band4G[i] in self.slownik:
+                if band5G[i] or band4G[i] and add[i] in self.slownik:
                     band5G[i] = self.slownik[band5G[i]]
                     band4G[i] = self.slownik[band4G[i]]
-            print(band5G)
+                    add[i] = self.slownik[add[i]]
+            #print(band5G)
         #zapis do pliku w odpowiednim formacie
         with open("Dane\\order.txt",'w',newline='') as file:
             writer = csv.writer(file)
             writer.writerow([len(nrZam)])
             for k in range(len(nrZam)):
-                writer.writerow([nrZam[k],iloscRU[k],band5G[k],band4G[k]])
+                writer.writerow([nrZam[k],iloscRU[k],band5G[k],add[k],band4G[k]])
 
