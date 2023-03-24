@@ -17,8 +17,6 @@ class Parse:
                 bandsLTE.append(line['Bandy4G'].split(','))
                 nrTL.append(line['NrTL'])
                 #print(line['NrTL'] + " Bandy NR: " + line['Bandy5G']+ " Bandy LTE: " + line['Bandy4G'])
-                #print(bandsNR)
-
         #Parsowanie linii pod radia NR
             for listNR in bandsNR:
                 for i in range(len(listNR)):
@@ -29,8 +27,6 @@ class Parse:
                 for i in range(len(listLTE)):
                     if listLTE[i] in self.slownik:
                         listLTE[i] = self.slownik[listLTE[i]]
-            #print(bandsNR)
-            #print(bandsLTE)
     #Wczytywanie danych do formatu txt
         with open("Dane\\testlines.txt",'w',newline='') as file:
             writer = csv.writer(file, delimiter=";")
@@ -65,8 +61,11 @@ class Parse:
         band5G = []
         band4G = []
         nrZam = []
-        iloscRU = []
+        iloscNR = []
+        iloscLTE = []
         add = []
+        addRU =[]
+        iloscRU = []
         #Otwarcie pliku csv i odczyt danych
         with open(path, encoding='utf-8-sig') as dane_order:
             reader = csv.DictReader(dane_order, delimiter=";")
@@ -75,21 +74,25 @@ class Parse:
                 band4G.append(line['Pasmo4G'])
                 nrZam.append(line['Nrzam'])
                 add.append(line['Dodatkowe5G'])
-                iloscRU.append(len(['Pasmo5G']+['Pasmo4G']))
+                #iloscRU.append(len(['Pasmo5G']+['Pasmo4G']))
                 #print("Zamówienie nr: " + line['Nrzam'] + " Band 5G: " + line['Pasmo5G'] + " Band 4G: " + line['Pasmo4G'])
-            #print(band5G)
-            print(band5G[0])
+
             #Porównanie wartości bandów z kluczem słownikowym i ich zamiana
             for i in range(len(nrZam)):
-                if band5G[i] or band4G[i] and add[i] in self.slownik:
+                if band5G[i] or band4G[i] or add[i] in self.slownik:
                     band5G[i] = self.slownik[band5G[i]]
                     band4G[i] = self.slownik[band4G[i]]
                     add[i] = self.slownik[add[i]]
-            #print(band5G)
+                iloscNR.append(bool(band5G[i]) if band5G[i] != 0 else 0)
+                iloscLTE.append(bool(band4G[i]) if band4G[i] != 0 else 0)
+                addRU.append(bool(add[i]) if add[i] != 0 else 0)
+                suma = iloscNR[i] + iloscLTE[i] + addRU[i]
+                iloscRU.append(suma)
+
         #zapis do pliku w odpowiednim formacie
         with open("Dane\\order.txt",'w',newline='') as file:
             writer = csv.writer(file)
             writer.writerow([len(nrZam)])
-            for k in range(len(nrZam)):
-                writer.writerow([nrZam[k],iloscRU[k],band5G[k],add[k],band4G[k]])
+            for i in range(len(nrZam)):
+                writer.writerow([nrZam[i],iloscRU[i],band5G[i],add[i],band4G[i]])
 
