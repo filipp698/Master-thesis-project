@@ -16,11 +16,11 @@ def importData():
     #     # zrób coś z wczytanymi danymi, np. wyświetl je
     #     print(data)
 
-    with open('Dane\\data_prog.txt', 'r') as daneTL:
-        for line in daneTL:
-            values = line.split()  # rozdziel wartości z wiersza
-            numbers = [int(x) for x in values]  # zamień wartości na liczby całkowite
-            #print(numbers)  # wyświetl liczby jako listę
+    # with open('Dane\\data_prog.txt', 'r') as daneTL:
+    #     for line in daneTL:
+    #         values = line.split()  # rozdziel wartości z wiersza
+    #         numbers = [int(x) for x in values]  # zamień wartości na liczby całkowite
+    #         #print(numbers)  # wyświetl liczby jako listę
 
     daneTL = open("Dane\\data_prog.txt")
     zawartosc = daneTL.read()
