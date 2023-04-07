@@ -1,5 +1,4 @@
-import numpy as np
-#pj - dlugosc sesji, dj - pozadany koniec sesji
+#class ReadData:
 def wczytaj_dane(nazwa_pliku):
     tasks = []
     zasobyTL = []
@@ -26,45 +25,56 @@ def wczytaj_dane(nazwa_pliku):
 
 def wykonaj_algorytm():
     path = 'Dane\\data_prog.txt'
-    tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, pj, dj, nr_zam = wczytaj_dane(path)
+    tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d, nr_zam = wczytaj_dane(path)
 
     print("Numery zamówień: ",nr_zam)
     print("Zasoby:", zasobyTL)
     print("Dane zamówienia: ", dataOrder)
     print("Ilosc zasobow wykorzystywanych w kazdym zadaniu: ",z)
-    print("Dlugosci trwania poszczególnych sesji: ", pj)
-    print("Pożadane końce sesji: ",dj)
+    print("Dlugosci trwania poszczególnych sesji: ", p)
+    print("Pożadane końce sesji: ",d)
     R = []  # moment zwolnienia zasobu
     #j = []  # możliwe permutacje zamówień
     #u = []  # lista urządzeń przyporządkowana do wykonania zadania
     u = [[0 for i in range(z[j])] for j in range(iloscZamowien)]
-    S = [] #momenty rozpoczęcia
-    C = [] #momenty zakończenia
-    Z = [i for i in range(iloscZasobow)]
-    for i in range(iloscZasobow):
-        R.append(int(0))
+    Cj = [] #momenty zakończenia
+    Sj = [] #momenty rozpoczęcia
+    #Z = [i for i in range(iloscZasobow)]
+    for i in range(iloscZasobow+1):
+        R.append(0)
+    #R = [0] * iloscZasobow
     for i in range(iloscZamowien):
         j = nr_zam[i]
+        #Sj = R[u[j][0]]
     #pierwszy etap
-        for t in range(z[j-1]):
-            # # wyznaczanie momentu zwolnienia zasobu
-            # z = Z[j - 1][t]  # indeks zasobu
-            # i = u[j - 1].index(t)  # indeks urządzenia u_{jt} w liście u_{j-1}
-            # C_iz = C[j - 1][i]  # moment zakończenia zadania i na maszynie z
-            # R[z] = max(R[z], C_iz)
-            #
-            # # wyznaczanie urządzenia u_{jt}
-            # u[j - 1][t] = zasobyTL[j - 1][t].index(min(zasobyTL[j - 1][t], key=lambda z: R[z]))
-            #u[j][t] = min(zasobyTL[j][t], key=lambda z: R[z])
-            u[j-1][t] = min(zasobyTL[j-1][t])
-            #S[j] = 1
-            #u[j-1][t] = min(zasobyTL[j-1][t], key=lambda z:R[z+1])
-            #print(u[j][t])
-    print(u)
+        for t in range(1,(z[j-1]+1)):
+            u[j-1][t-1] = min(zasobyTL[j-1][t-1][1:], key=lambda z: R[z]) #lista list
+            #ujt2.append(min(zasobyTL[j - 1][t-1][1:], key=lambda z: R[z - 1])) #pojedyncza lista
+            #ujt = (min(zasobyTL[j - 1][t - 1][1:], key=lambda z: R[z - 1]))
+        #drugi etap
+        Sj.append(R[u[j-1][0]])
+        S = R[u[j-1][0]] #moment rozpoczęcia wynosi moment zwolnienia danej TL
+        for t in range(2,(z[j-1]+1)): #indeksowanie się po radiach
+            if S < R[u[j-1][t-1]]: #jeśli mooment rozpoczęcia będzie mniejszy niż dostępne radio to zmieniamy go na wartość dostępności RU
+                S = R[u[j-1][t-1]]
+        #trzeci etap
+        C = S + p[j-1] #moment zakończenia
+        Cj.append(S + p[j-1])
+        #czwarty etap
+        for t in range(1,(z[j-1]+1)):
+            R[u[j-1][t-1]] = C
 
-            #a=1
-    #print("Możliwe permutacje: ",j)
-    #print("Zasoby potrzebne do wykonania danego zamówienia: ", min(zasobyTL[0][2]))
+    print("Lista urządzeń potrzebnych do wykonania zadań:",u)
+    print("Momenty rozpoczęcia zadań: ", Sj)
+    print("Momenty zakończenia zadań: ", Cj)
+    with open("Dane\\wyniki.txt","w") as file:
+        for i in range(len(Sj)):
+            file.write(str(Sj[i]) +" ")
+            file.write(str(Cj[i]) +" :")
+            file.write(str(u[i]) + "\n")
+
+
+    return u,Sj,Cj
 
 
 wykonaj_algorytm()
