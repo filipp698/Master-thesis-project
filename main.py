@@ -1,13 +1,14 @@
-import numpy as np
+#import numpy as np
 import Data
 import Parse
+import ReadData
 
 # ścieżki do plików testowych
 pathOrder = "Dane\\dane_order.csv"
-pathRU = "Dane\\dane_radia.csv"
-pathTL = "Dane\\dane_testlines.csv"
+pathData = 'Dane\\data_prog.txt'
 #inicjalizacja obiektu i wczytanie danych
 data = Parse.Parse()
 data.importOrder(pathOrder)
-#data.importTL(pathTL)
-#data.importRU(pathRU)
+#wcztywanie przeparsowanych danych i zaimplementowanie ich do algorytmu
+alg = ReadData.ReadData()
+alg.wykonaj_algorytm(pathData)
