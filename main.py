@@ -5,10 +5,11 @@ import ReadData
 
 # ścieżki do plików testowych
 pathOrder = "Dane\\dane_order.csv"
-pathData = 'Dane\\data_prog.txt'
+pathData = 'Dane\\data_25.txt'
 #inicjalizacja obiektu i wczytanie danych
 data = Parse.Parse()
-data.importOrder(pathOrder)
+data.parse_TL()
+#data.importOrder(pathOrder)
 #wcztywanie przeparsowanych danych i zaimplementowanie ich do algorytmu
-alg = ReadData.ReadData()
-alg.wykonaj_algorytm(pathData)
+#alg = ReadData.ReadData()
+#alg.wykonaj_algorytm(pathData)
