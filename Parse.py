@@ -27,13 +27,21 @@ class Parse:
         with open(path2) as Zasoby:
             reader = csv.DictReader(Zasoby, delimiter=";")
             for line in reader:
-                numerZasobu.append(line['NR'])
-                kodZasobu.append(line['KOD'])
-            print(numerZasobu)
-            print(kodZasobu)
+                numerZasobu.append(line['NR']) #1,2,3
+                kodZasobu.append(line['KOD']) #TL1,TL2
+            #print(numerZasobu)
+            #print(kodZasobu)
             print("Ilosc zasobow: ", len(kodZasobu))
-        my_dict = dict(zip(kodZasobu,numerZasobu))
-        print("Slownik", my_dict)
+        my_dict = {}
+        #my_dict = {kodZasobu[i]: numerZasobu[i] for i in range(len(kodZasobu))}
+        for i, value in enumerate(kodZasobu):
+            if value in my_dict:
+                my_dict[value].append(numerZasobu[i])
+            else:
+                my_dict[value] = [numerZasobu[i]]
+        print(my_dict)
+        print(my_dict['b1'])
+        print(len(my_dict['b1']))
 
         with open(path) as daneTL:
             reader = csv.DictReader(daneTL, delimiter=";")
@@ -58,14 +66,36 @@ class Parse:
         print("Bandy NR:",band5G)
         print("Dodatkowe 5G:", add5G)
         print("Bandy LTE: ", band4G)
-        print("Ilość radii w danym zamówieniu", iloscRU)
-
+        #print("Ilość radii w danym zamówieniu", iloscRU)
+        listNR= []
+        listLTE = []
+        listAdd = []
         # zapis do pliku w odpowiednim formacie
         with open("Dane\\dane_moje.txt", 'w', newline='') as file:
-            writer = csv.writer(file)
+            writer = csv.writer(file, delimiter=' ')
             writer.writerow([len(nrZam),len(kodZasobu)-1])
             for i in range(len(nrZam)):
-                writer.writerow([nrZam[i], iloscRU[i], band5G[i], add5G[i], band4G[i]])
+                writer.writerow([nrZam[i],dl_sesji[i],koniec_sesji[i], iloscRU[i]])
+                for j in range(len(band5G[i])):
+                    listNR.append(band5G[i][j])
+                writer.writerow(listNR)
+                listNR.clear()
+                for j in range(len(add5G[i])):
+                    #if add5G[i] != my_dict['-']:
+                    listAdd.append(add5G[i][j])
+                if listAdd != my_dict['-']:
+                    writer.writerow(listAdd)
+                listAdd.clear()
+                for j in range(len(band4G[i])):
+                    #if band4G[i] != my_dict['-']:
+                    listLTE.append(band4G[i][j])
+                if listLTE != my_dict['-']:
+                    writer.writerow(listLTE)
+                listLTE.clear()
+                #writer.writerow([len(band5G[i]),band5G[i]])
+                #if add5G[i] != my_dict['-']: writer.writerow([len(add5G[i]), add5G[i]])
+                #if band4G[i] != my_dict['-']: writer.writerow([len(band4G[i]), band4G[i]])
+
     def importTL(self,path):
         nrTL = []
         bandsNR = []
