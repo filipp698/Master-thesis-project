@@ -78,18 +78,23 @@ class Parse:
                 writer.writerow([nrZam[i],dl_sesji[i],koniec_sesji[i], iloscRU[i]])
                 for j in range(len(band5G[i])):
                     listNR.append(band5G[i][j])
+                # a = len(band5G[i])
+                # a.extend(listNR)
+                listNR.insert(0,len(band5G[i]))
                 writer.writerow(listNR)
                 listNR.clear()
                 for j in range(len(add5G[i])):
                     #if add5G[i] != my_dict['-']:
                     listAdd.append(add5G[i][j])
                 if listAdd != my_dict['-']:
+                    listAdd.insert(0, len(add5G[i]))
                     writer.writerow(listAdd)
                 listAdd.clear()
                 for j in range(len(band4G[i])):
                     #if band4G[i] != my_dict['-']:
                     listLTE.append(band4G[i][j])
                 if listLTE != my_dict['-']:
+                    listLTE.insert(0, len(band4G[i]))
                     writer.writerow(listLTE)
                 listLTE.clear()
                 #writer.writerow([len(band5G[i]),band5G[i]])

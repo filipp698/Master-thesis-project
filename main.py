@@ -1,4 +1,4 @@
-#import numpy as np
+import numpy as np
 import Data
 import Parse
 import ReadData
