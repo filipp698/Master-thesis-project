@@ -23,15 +23,18 @@ class Parse:
         iloscRU = []
         numerZasobu = []
         kodZasobu = []
+        inne =[]
+
 
         with open(path2) as Zasoby:
             reader = csv.DictReader(Zasoby, delimiter=";")
             for line in reader:
                 numerZasobu.append(line['NR']) #1,2,3
                 kodZasobu.append(line['KOD']) #TL1,TL2
+                inne.append(line['inne'])
             #print(numerZasobu)
             #print(kodZasobu)
-            print("Ilosc zasobow: ", len(kodZasobu))
+        #print(inne)
         my_dict = {}
         #my_dict = {kodZasobu[i]: numerZasobu[i] for i in range(len(kodZasobu))}
         for i, value in enumerate(kodZasobu):
@@ -40,8 +43,10 @@ class Parse:
             else:
                 my_dict[value] = [numerZasobu[i]]
         print(my_dict)
-        print(my_dict['b1'])
-        print(len(my_dict['b1']))
+        #radiaFDD = ['n1','n3','n5','n8','n14','n20','n28']
+
+        #print(radiaFDD)
+        #print(radiaTDD)
 
         with open(path) as daneTL:
             reader = csv.DictReader(daneTL, delimiter=";")
@@ -57,29 +62,50 @@ class Parse:
                     band5G[i] = my_dict[band5G[i]]
                     band4G[i] = my_dict[band4G[i]]
                     add5G[i] = my_dict[add5G[i]]
-                iloscNR.append(bool(band5G[i]) if band5G[i] != 0 else 0)
-                iloscLTE.append(bool(band4G[i]) if band4G[i] != 0 else 0)
-                addRU.append(bool(add5G[i]) if add5G[i] != 0 else 0)
+                iloscNR.append(bool(band5G[i]) if band5G[i][0] != '0' else 0)
+                iloscLTE.append(bool(band4G[i]) if band4G[i][0] != '0' else 0)
+                addRU.append(bool(add5G[i]) if add5G[i][0] != '0' else 0)
                 suma = iloscNR[i] + iloscLTE[i] + addRU[i] + 1
                 iloscRU.append(suma)
+        print("Ilosc zasobow: ", len(kodZasobu))
         print("Ilosc zamowien: ",len(nrZam))
-        print("Bandy NR:",band5G)
-        print("Dodatkowe 5G:", add5G)
-        print("Bandy LTE: ", band4G)
+        #print("Bandy NR:",band5G)
+        #print("Dodatkowe 5G:", add5G)
+        #print("Bandy LTE: ", band4G)
         #print("Ilość radii w danym zamówieniu", iloscRU)
-        listNR= []
+        listNR= [] #listy do przechowywania radii przy zapisywaniu danych
         listLTE = []
         listAdd = []
+        dict = {'n40': my_dict['n40'], 'n41': my_dict['n41'], 'n47': my_dict['n47'], 'n77': my_dict['n77'],
+                'n78': my_dict['n78']}
+        print(dict)
+        print(dict.keys())
+        TDD = [6, 7, 8]
+        FDD = [1, 2, 3, 4, 5]
+        radiaTDD = ['n40', 'n41', 'n47', 'n77', 'n78']
+        #slownikFDD = {'TL 1': my_dict['TL 1'], 'TL 2': my_dict['TL 2'], 'TL 3': my_dict['TL 3'],'TL 4': my_dict['TL 4'],'TL 5': my_dict['TL 5']}
+        #slownikTDD = {'TL 6': my_dict['TL 6'], 'TL 7': my_dict['TL 7'], 'TL 8': my_dict['TL 8']}
+        # for i in range(len(TDD)):
+        #     if TDD[i] in slownikTDD:
+        #         TDD[i] = slownikTDD[TDD[i]]
+        # print(slownikTDD)
+        # print(slownikFDD)
+        #print(my_dict['n1'])
         # zapis do pliku w odpowiednim formacie
         with open("Dane\\dane_moje.txt", 'w', newline='') as file:
             writer = csv.writer(file, delimiter=' ')
             writer.writerow([len(nrZam),len(kodZasobu)-1])
             for i in range(len(nrZam)):
+                #print(my_dict['band5G'])
                 writer.writerow([nrZam[i],dl_sesji[i],koniec_sesji[i], iloscRU[i]])
+                # if band5G[i][0] in dict:
+                #     writer.writerow([len(TDD),TDD])
+                # else:
+                #     writer.writerow([len(FDD),FDD])
                 for j in range(len(band5G[i])):
                     listNR.append(band5G[i][j])
-                # a = len(band5G[i])
-                # a.extend(listNR)
+                    # if band5G[i][j] in dict['n40']:
+                    #     writer.writerow([TDD])
                 listNR.insert(0,len(band5G[i]))
                 writer.writerow(listNR)
                 listNR.clear()
