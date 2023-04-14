@@ -78,8 +78,10 @@ class Parse:
         listAdd = []
         dict = {'n40': my_dict['n40'], 'n41': my_dict['n41'], 'n47': my_dict['n47'], 'n77': my_dict['n77'],
                 'n78': my_dict['n78']}
+        dict2 = {'n40': 39, 'n41': 42, 'n47': 46, 'n77': 50, 'n78': 52}
         print(dict)
-        print(dict.keys())
+        bb = dict2.values()
+        print(dict2.values())
         TDD = [6, 7, 8]
         FDD = [1, 2, 3, 4, 5]
         radiaTDD = ['n40', 'n41', 'n47', 'n77', 'n78']
@@ -96,12 +98,11 @@ class Parse:
             writer = csv.writer(file, delimiter=' ')
             writer.writerow([len(nrZam),len(kodZasobu)-1])
             for i in range(len(nrZam)):
-                #print(my_dict['band5G'])
                 writer.writerow([nrZam[i],dl_sesji[i],koniec_sesji[i], iloscRU[i]])
-                # if band5G[i][0] in dict:
-                #     writer.writerow([len(TDD),TDD])
-                # else:
-                #     writer.writerow([len(FDD),FDD])
+                if int(band5G[i][0]) in dict2.values():
+                    writer.writerow([len(TDD),TDD])
+                else:
+                    writer.writerow([len(FDD),FDD])
                 for j in range(len(band5G[i])):
                     listNR.append(band5G[i][j])
                     # if band5G[i][j] in dict['n40']:
