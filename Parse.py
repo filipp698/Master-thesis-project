@@ -5,9 +5,7 @@ class Parse:
     # slownik = {"-":0,'n1':1,'n3':2,'n5':3,'n8':4,'n14':5,'n20':6,'n28':7,'n40':8,'n41':9,'n47':10,'n77':11,'n78':12,
     #             'b1':13,'b3':14,'b5':15,'b8':16,'b14':17,'b20':18,'b28':19,'b40':20,'b41':21,'b47':22,'b77':23}
     #odczyt danych TL z pliku csv
-    def parse_TL(self):
-        path = "Dane\\orders25.csv"
-        path2 = "Dane\\zasoby.csv"
+    def parse_TL(self,pathOder,pathZasoby,pathParse):
         nrZam = []
         band5G = []
         add5G = []
@@ -22,7 +20,7 @@ class Parse:
         kodZasobu = []
         inne =[]
         #odczyt danych z zasobami
-        with open(path2) as zasoby:
+        with open(pathZasoby) as zasoby:
             reader = csv.DictReader(zasoby, delimiter=";")
             for line in reader:
                 numerZasobu.append(line['NR']) #1,2,3
@@ -37,15 +35,15 @@ class Parse:
         print(slownik)
 
         #odczyt danych zamówień
-        with open(path) as daneOrder:
+        with open(pathOder) as daneOrder:
             reader = csv.DictReader(daneOrder, delimiter=";")
             for line in reader:
-                nrZam.append(line['Numer_zamowienia'])
+                nrZam.append(line['Numer zamówienia'])
                 band5G.append(line['Badane pasmo 5G'])
                 add5G.append(line['Dodatkowe pasmo 5G'])
                 band4G.append(line['Badane pasmo 4G'])
-                dl_sesji.append(line['Dlugosc trwania sesji'])
-                koniec_sesji.append(line['Pozadany tydzien zakonczenia'])
+                dl_sesji.append(line['Długość trwania sesji (badania poszczególnych  funkcji) [tyg]'])
+                koniec_sesji.append(line['Pożądany tydzień zakończenia sesji [tyg]'])
             #zamiana poszczególnych bandów na wartości liczbowe ze słownika
             for i in range(len(nrZam)):
                 if band5G[i] or band4G[i] or add5G[i] in slownik:
@@ -85,7 +83,7 @@ class Parse:
         listLTE = []
         listAdd = []
         # zapis do pliku w odpowiednim formacie
-        with open("Dane\\dane_moje.txt", 'w', newline='') as file:
+        with open(pathParse, 'w', newline='') as file:
             writer = csv.writer(file, delimiter=' ')
             writer.writerow([len(nrZam),len(kodZasobu)-1]) #pierwsza linijka pliku wyjsciowego
             for i in range(len(nrZam)):

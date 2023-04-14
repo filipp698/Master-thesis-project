@@ -25,9 +25,9 @@ class ReadData:
 
     def wykonaj_algorytm(self,path):
         tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d, nr_zam = self.wczytaj_dane(path)
-        print("Numery zamówień: ",nr_zam)
-        print("Zasoby:", zasobyTL)
-        print("Dane zamówienia: ", dataOrder)
+        #print("Numery zamówień: ",nr_zam)
+        #print("Zasoby:", zasobyTL)
+        #("Dane zamówienia: ", dataOrder)
         print("Ilosc zasobow wykorzystywanych w kazdym zadaniu: ",z)
         print("Dlugosci trwania poszczególnych sesji: ", p)
         print("Pożadane końce sesji: ",d)
