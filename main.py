@@ -4,7 +4,7 @@ import Parse
 import ReadData
 
 # ścieżki do plików testowych
-pathOrder = "daneTestowe\\dane100_1.csv"
+pathOrder = "daneTestowe\\dane25.csv"
 pathZasoby = "Dane\\zasoby.csv"
 pathData = "Dane\\dane_sparsowane.txt"
 

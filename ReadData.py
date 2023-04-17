@@ -35,6 +35,7 @@ class ReadData:
         u = [[0 for i in range(z[j])] for j in range(iloscZamowien)]
         Cj = [] #momenty zakończenia
         Sj = [] #momenty rozpoczęcia
+        Tj = [] #funkcja kary
         for i in range(iloscZasobow+1):
             R.append(0)
         for i in range(iloscZamowien):
@@ -52,6 +53,11 @@ class ReadData:
             #trzeci etap
             C = S + p[j-1] #moment zakończenia
             Cj.append(S + p[j-1])
+            T = C - d[j-1]
+            if T > 0:
+                Tj.append(C - d[j-1])
+            elif T <= 0:
+                Tj.append(0)
             #czwarty etap
             for t in range(1,(z[j-1]+1)):
                 R[u[j-1][t-1]] = C
@@ -59,11 +65,15 @@ class ReadData:
         print("Lista urządzeń potrzebnych do wykonania zadań:",u)
         print("Momenty rozpoczęcia zadań: ", Sj)
         print("Momenty zakończenia zadań: ", Cj)
+        suma_kar = sum(Tj)
+        print("Funkcja kary: ", Tj)
+        print("Suma spóźnień: ", suma_kar)
         with open("Dane\\wyniki.txt","w") as file:
             for i in range(len(Sj)):
                 file.write(str(Sj[i]) +" ")
                 file.write(str(Cj[i]) +" : ")
                 file.write(str(u[i]) + "\n")
+            file.write('Suma spoznien wynosi: ' + str(suma_kar) + '\n')
         return u,Sj,Cj
 
 
