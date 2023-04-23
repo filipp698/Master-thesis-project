@@ -1,11 +1,10 @@
 import random
-
 import numpy as np
 import matplotlib.pyplot as plt
-from TabuSearch import TabuSearch
+from ReadData import ReadData
 
 
-class SA(TabuSearch):
+class SA(ReadData):
     tour = np.zeros(3, dtype=int)
     distances = np.zeros(3)
     n = 0
@@ -32,8 +31,8 @@ class SA(TabuSearch):
 
     def Power(self, currentBestTour, newTour, temperature,path):
         # obliczenie długości obu tras
-        currentBestLen = self.oblicz_spoznienia(currentBestTour,path)
-        newLen = self.oblicz_spoznienia(newTour,path)
+        _,_,_,currentBestLen = self.wykonaj_algorytm(currentBestTour,path)
+        _,_,_,newLen = self.wykonaj_algorytm(newTour,path)
         # jesli wylosowane rozwiązanie jest lepsze od aktualnego,
         # zaktualizuj aktualne
         if newLen <= currentBestLen:
@@ -51,7 +50,7 @@ class SA(TabuSearch):
 
         return propabilityOfAcceptance
 
-    def SA(self, maxIteration, kmax, path):
+    def SA(self, maxIteration, kmax, path, pathWynik):
         # tablica zawierająca aktualnie wygenerowaną permutację
         #newTour = np.copy(self.tour)
         # tablica z minimalną permutacją w każdej iteracji while-a
@@ -79,7 +78,17 @@ class SA(TabuSearch):
             if self.Power(self.tour, newTour, temp, path) >= probabilityOfAcceptance:
                 self.tour = newTour
 
+        u,Sj,Cj,suma_spoznien = self.wykonaj_algorytm(self.tour,path)
+        print("Suma spóźnień: ", suma_spoznien)
+        with open(pathWynik,"w") as file:
+            for i in range(len(Sj)):
+                file.write(str(Sj[i]) +" ")
+                file.write(str(Cj[i]) +" : ")
+                file.write(str(u[i]) + "\n")
+            file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
         # print(self.tour.astype(int))
-        print("Suma spóźnień: ", (self.oblicz_spoznienia(self.tour,path)))
+        #print("Suma spóźnień: ", (self.wykonaj_algorytm(self.tour,path)))
+
+
 
 

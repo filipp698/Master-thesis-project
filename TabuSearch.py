@@ -19,16 +19,15 @@ class TabuSearch(ReadData):
         #self.firstPermutation = self.generateRandomPermutation(permutation)
         self.firstPermutation = permutation
 
-    def execute(self, startPermutation, lenghtOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval):
-        path = "Dane\\dane_sparsowane.txt"
-        _,_,_,Tj = self.wykonaj_algorytm(path)
+    def execute(self, startPermutation, lenghtOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,path,pathWynik):
+        _,_,_,Tj = self.wykonaj_algorytm(self.firstPermutation,path)
         isCycleNumberMaxReached = False
         intervalIterator = 0
         permutation = startPermutation
         localBestPermutation = startPermutation
         tabuList = Queue_.Queue(lenghtOfTabu)
         tabuList.put(localBestPermutation)
-        self.suma_kar = sum(Tj)
+        self.suma_kar = Tj
         ## KONIEC ALGORYTMU
 
         for xx in range(iterationNumber):
@@ -36,7 +35,7 @@ class TabuSearch(ReadData):
             neighborhood = self.generateNeighborhood(permutation, option)
             for neighborPermutation in neighborhood:
                 isInTabu, index = tabuList.contains(neighborPermutation)
-                distance = self.oblicz_spoznienia(neighborPermutation,path) #kalkuluować sumę spóźnień dla danej permutacji
+                _,_,_,distance = self.wykonaj_algorytm(neighborPermutation,path) #kalkuluować sumę spóźnień dla danej permutacji
                 if distance < localBestDistance:
                     if isInTabu:
                         if self.bestDistance > distance:
@@ -80,48 +79,56 @@ class TabuSearch(ReadData):
             self.permutationHistoryGlobal.append(self.bestPermutation)
             self.permutationHistoryLocal.append(localBestPermutation)
 
+            u, Sj, Cj, suma_spoznien = self.wykonaj_algorytm(self.bestPermutation, path)
+            with open(pathWynik, "w") as file:
+                for i in range(len(Sj)):
+                    file.write(str(Sj[i]) + " ")
+                    file.write(str(Cj[i]) + " : ")
+                    file.write(str(u[i]) + "\n")
+                file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
+
         return self.bestPermutation
 
-    def oblicz_spoznienia(self,permutacja,path):
-        tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d,_ = self.wczytaj_dane(path)
-        nr_zam = permutacja
-        R = []  # moment zwolnienia zasobu
-        Sj = []
-        Cj = []
-        Tj = []
-        u = [[0 for i in range(z[j])] for j in range(iloscZamowien)]
-        for i in range(iloscZasobow+1):
-            R.append(0)
-        for i in range(iloscZamowien):
-            j = nr_zam[i] #możliwe permutacje zamówień
-        #pierwszy etap
-            for t in range(1,(z[j-1]+1)):
-                u[j-1][t-1] = min(zasobyTL[j-1][t-1][1:], key=lambda z: R[z]) #lista list
-            #drugi etap
-            S = R[u[j-1][0]] #moment rozpoczęcia wynosi moment zwolnienia danej TL
-            Sj.append(R[u[j-1][0]])
-            for t in range(2,(z[j-1]+1)): #indeksowanie się po radiach
-                if S < R[u[j-1][t-1]]: #jeśli mooment rozpoczęcia będzie mniejszy niż dostępne radio to zmieniamy go na wartość dostępności RU
-                    S = R[u[j-1][t-1]]
-            #trzeci etap
-            C = S + p[j-1] #moment zakończenia
-            Cj.append(S + p[j-1])
-            T = C - d[j-1]
-            if T > 0:
-                Tj.append(C - d[j-1])
-            elif T <= 0:
-                Tj.append(0)
-            #czwarty etap
-            for t in range(1,(z[j-1]+1)):
-                R[u[j-1][t-1]] = C
-        suma_kar = sum(Tj)
-        with open("Dane\\wynikiSA.txt","w") as file:
-            for i in range(len(Sj)):
-                file.write(str(Sj[i]) +" ")
-                file.write(str(Cj[i]) +" : ")
-                file.write(str(u[i]) + "\n")
-            file.write('Suma spoznien wynosi: ' + str(suma_kar) + '\n')
-        return suma_kar
+    # def oblicz_spoznienia(self,permutacja,path):
+    #     tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d,_ = self.wczytaj_dane(path)
+    #     nr_zam = permutacja
+    #     R = []  # moment zwolnienia zasobu
+    #     Sj = []
+    #     Cj = []
+    #     Tj = []
+    #     u = [[0 for i in range(z[j])] for j in range(iloscZamowien)]
+    #     for i in range(iloscZasobow+1):
+    #         R.append(0)
+    #     for i in range(iloscZamowien):
+    #         j = nr_zam[i] #możliwe permutacje zamówień
+    #     #pierwszy etap
+    #         for t in range(1,(z[j-1]+1)):
+    #             u[j-1][t-1] = min(zasobyTL[j-1][t-1][1:], key=lambda z: R[z]) #lista list
+    #         #drugi etap
+    #         S = R[u[j-1][0]] #moment rozpoczęcia wynosi moment zwolnienia danej TL
+    #         Sj.append(R[u[j-1][0]])
+    #         for t in range(2,(z[j-1]+1)): #indeksowanie się po radiach
+    #             if S < R[u[j-1][t-1]]: #jeśli mooment rozpoczęcia będzie mniejszy niż dostępne radio to zmieniamy go na wartość dostępności RU
+    #                 S = R[u[j-1][t-1]]
+    #         #trzeci etap
+    #         C = S + p[j-1] #moment zakończenia
+    #         Cj.append(S + p[j-1])
+    #         T = C - d[j-1]
+    #         if T > 0:
+    #             Tj.append(C - d[j-1])
+    #         elif T <= 0:
+    #             Tj.append(0)
+    #         #czwarty etap
+    #         for t in range(1,(z[j-1]+1)):
+    #             R[u[j-1][t-1]] = C
+    #     suma_kar = sum(Tj)
+    #     with open("Dane\\wynikiSA.txt","w") as file:
+    #         for i in range(len(Sj)):
+    #             file.write(str(Sj[i]) +" ")
+    #             file.write(str(Cj[i]) +" : ")
+    #             file.write(str(u[i]) + "\n")
+    #         file.write('Suma spoznien wynosi: ' + str(suma_kar) + '\n')
+    #     return suma_kar
 
     def generateNeighborhood(self, permutation, option):
         dictionary = {
