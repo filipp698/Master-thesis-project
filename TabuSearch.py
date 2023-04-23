@@ -80,7 +80,7 @@ class TabuSearch(ReadData):
             self.permutationHistoryLocal.append(localBestPermutation)
 
             u, Sj, Cj, suma_spoznien = self.wykonaj_algorytm(self.bestPermutation, path)
-            with open(pathWynik, "w") as file:
+            with open(pathWynik + option + ".txt", "w") as file:
                 for i in range(len(Sj)):
                     file.write(str(Sj[i]) + " ")
                     file.write(str(Cj[i]) + " : ")
