@@ -115,7 +115,7 @@ class TabuSearch(ReadData):
             for t in range(1,(z[j-1]+1)):
                 R[u[j-1][t-1]] = C
         suma_kar = sum(Tj)
-        with open("Dane\\wynikiTabu.txt","w") as file:
+        with open("Dane\\wynikiSA.txt","w") as file:
             for i in range(len(Sj)):
                 file.write(str(Sj[i]) +" ")
                 file.write(str(Cj[i]) +" : ")

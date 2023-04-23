@@ -32,7 +32,7 @@ class Parse:
                 slownik[value].append(numerZasobu[i])
             else:
                 slownik[value] = [numerZasobu[i]]
-        print(slownik)
+        #print(slownik)
 
         #odczyt danych zamówień
         with open(pathOder) as daneOrder:
