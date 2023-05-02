@@ -7,10 +7,10 @@ class ReadData:
     suma_kar = 0
 
     def __init__(self,path):
-        _, iloscZamowien, _, _, _, _, _, _, permutation = self.wczytaj_dane(path)
+        _, iloscZamowien, _, _, _, _, _, _, permutation = self.readData(path)
         self.firstPermutation = permutation
 
-    def wczytaj_dane(self,nazwa_pliku):
+    def readData(self, nazwa_pliku):
         tasks = []
         zasobyTL = []
         dataOrder = []
@@ -34,8 +34,8 @@ class ReadData:
                 tasks.append([nr,pj,dj, zasoby])
         return tasks,ilosc_zadan,ilosc_zasobow,zasobyTL,dataOrder,zas_zad,dl_sesji,koniec_sesji,nr_zam
 
-    def wykonaj_algorytm(self, permutacja, path):
-        tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d, _ = self.wczytaj_dane(path)
+    def makeSchedule(self, permutacja, path):
+        tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d, _ = self.readData(path)
         nr_zam = permutacja
         R = []  # moment zwolnienia zasobu
         Sj = []
@@ -68,18 +68,11 @@ class ReadData:
             for t in range(1, (z[j - 1] + 1)):
                 R[u[j - 1][t - 1]] = C
         suma_kar = sum(Tj)
-        #print("Suma spoznien wynosi: ", suma_kar)
-        # with open("Dane\\wyniki.txt", "w") as file:
-        #     for i in range(len(Sj)):
-        #         file.write(str(Sj[i]) +" ")
-        #         file.write(str(Cj[i]) +" : ")
-        #         file.write(str(u[i]) + "\n")
-        #     file.write('Suma spoznien wynosi: ' + str(suma_kar) + '\n')
         return u,Sj,Cj,suma_kar
 
-    def zapisz_wynik(self,pathData,pathWynik):
+    def saveResults(self, pathData, pathWynik):
         permutacja = self.firstPermutation
-        u,Sj,Cj,suma_kar = self.wykonaj_algorytm(permutacja, pathData)
+        u,Sj,Cj,suma_kar = self.makeSchedule(permutacja, pathData)
         # print("Lista urządzeń potrzebnych do wykonania zadań:",self.u)
         # print("Momenty rozpoczęcia zadań: ", self.Sj)
         # print("Momenty zakończenia zadań: ", self.Cj)

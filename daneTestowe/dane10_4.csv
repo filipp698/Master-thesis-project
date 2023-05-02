@@ -1,0 +1,11 @@
+Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana technologia radiowa);Badane pasmo 5G;Dodatkowe pasmo 5G;Badane pasmo 4G;D³ugoœæ trwania sesji (badania poszczególnych  funkcji) [tyg];Po¿¹dany tydzieñ zakoñczenia sesji [tyg];Alternatywna lokalizacja testow
+1;OnePlus;9s;Non-Standalone (NSA);n5;n8;-;3;6;Ulm
+2;Apple;13;Non-Standalone (NSA);n14;-;b14;4;8;Dallas
+3;Oppo;9X;Standalone (SA);n28;-;-;6;6;Ulm
+4;Xiaomi;12 pro;Non-Standalone (NSA);n1;n8;b8;8;10;Pekin
+5;OnePlus;7;Standalone (SA);n14;-;b14;4;12;Dallas
+6;Samsung;21;Standalone (SA);n41;-;b41;2;14;Kraków
+7;Vivo;x60;Non-Standalone (NSA);n77;n78;b77;3;4;Pekin
+8;Apple;12 pro;Standalone (SA);n8;n14;b14;6;12;Ulm
+9;Samsung;Ultra;Non-Standalone (NSA);n3;n28;-;4;9;Kraków
+10;Samsung;S22;Standalone (SA);n1;-;b14;7;10;Pekin

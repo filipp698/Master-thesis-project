@@ -6,7 +6,7 @@ from ReadData import ReadData
 
 class TabuSearch(ReadData):
     firstPermutation = np.zeros(3)
-    bestDistance = 9999
+    bestDelay = 9999
     bestPermutation = np.zeros(3)
     bestPermutationHistory = []
     localBestpermutationHistory = []
@@ -15,12 +15,12 @@ class TabuSearch(ReadData):
     suma_kar = 0
 
     def __init__(self,path):
-        _, _, _, _, _, _, _, _, permutation = self.wczytaj_dane(path)
+        _, _, _, _, _, _, _, _, permutation = self.readData(path)
         #self.firstPermutation = self.generateRandomPermutation(permutation)
         self.firstPermutation = permutation
 
     def execute(self, startPermutation, lenghtOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,path,pathWynik):
-        _,_,_,Tj = self.wykonaj_algorytm(self.firstPermutation,path)
+        _,_,_,Tj = self.makeSchedule(self.firstPermutation, path)
         isCycleNumberMaxReached = False
         intervalIterator = 0
         permutation = startPermutation
@@ -31,26 +31,26 @@ class TabuSearch(ReadData):
         ## KONIEC ALGORYTMU
 
         for xx in range(iterationNumber):
-            localBestDistance = sys.maxsize
+            localBestDelay = sys.maxsize
             neighborhood = self.generateNeighborhood(permutation, option)
             for neighborPermutation in neighborhood:
                 isInTabu, index = tabuList.contains(neighborPermutation)
-                _,_,_,distance = self.wykonaj_algorytm(neighborPermutation,path) #kalkuluować sumę spóźnień dla danej permutacji
-                if distance < localBestDistance:
+                _,_,_,delay = self.makeSchedule(neighborPermutation, path) #kalkuluować sumę spóźnień dla danej permutacji
+                if delay < localBestDelay:
                     if isInTabu:
-                        if self.bestDistance > distance:
-                            localBestDistance = distance
+                        if self.bestDelay > delay:
+                            localBestDelay = delay
                             localBestPermutation = neighborPermutation
                         else:
                             pass
                             # neighborhood.remove(index)
                     else:
-                        localBestDistance = distance
+                        localBestDelay = delay
                         localBestPermutation = neighborPermutation
             bestPermutationChanged = False
-            print(str(xx) + ": " + str(localBestDistance))
-            if localBestDistance < self.bestDistance:
-                self.bestDistance = localBestDistance
+            print(str(xx) + ": " + str(localBestDelay))
+            if localBestDelay < self.bestDelay:
+                self.bestDelay = localBestDelay
                 self.bestPermutation = localBestPermutation
                 bestPermutationChanged = True
             permutation = localBestPermutation
@@ -59,7 +59,7 @@ class TabuSearch(ReadData):
                 cycleNumber = 0
                 isCycleNumberMaxReached = False
                 intervalIterator = 0
-                print("Best permutation found: " + str(self.bestPermutation) + " Suma:" + str(self.bestDistance))
+                print("Best permutation found: " + str(self.bestPermutation) + " Suma:" + str(self.bestDelay))
             else:
                 if not intervalIterator < reactiveInterval or not isCycleNumberMaxReached:
                     cycleNumber += 1
@@ -74,12 +74,12 @@ class TabuSearch(ReadData):
                         intervalIterator = 0
                     else:
                         return self.bestPermutation
-            self.bestPermutationHistory.append(self.bestDistance)
-            self.localBestpermutationHistory.append(localBestDistance)
+            self.bestPermutationHistory.append(self.bestDelay)
+            self.localBestpermutationHistory.append(localBestDelay)
             self.permutationHistoryGlobal.append(self.bestPermutation)
             self.permutationHistoryLocal.append(localBestPermutation)
 
-            u, Sj, Cj, suma_spoznien = self.wykonaj_algorytm(self.bestPermutation, path)
+            u, Sj, Cj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
             with open(pathWynik + option + ".txt", "w") as file:
                 for i in range(len(Sj)):
                     file.write(str(Sj[i]) + " ")

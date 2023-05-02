@@ -13,7 +13,7 @@ class SA(ReadData):
     #     pass
 
     def createFirstTour(self,path):
-        _, iloscZamowien, _, _, _, _, _, _, permutation = self.wczytaj_dane(path)
+        _, iloscZamowien, _, _, _, _, _, _, permutation = self.readData(path)
         # self.firstPermutation = self.generateRandomPermutation(permutation)
         self.tour = permutation
         self.n = iloscZamowien
@@ -29,10 +29,10 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    def Power(self, currentBestTour, newTour, temperature,path):
+    def Power(self, currentBestPermutation, newPermutation, temperature, path):
         # obliczenie długości obu tras
-        _,_,_,currentBestLen = self.wykonaj_algorytm(currentBestTour,path)
-        _,_,_,newLen = self.wykonaj_algorytm(newTour,path)
+        _,_,_,currentBestLen = self.makeSchedule(currentBestPermutation, path)
+        _,_,_,newLen = self.makeSchedule(newPermutation, path)
         # jesli wylosowane rozwiązanie jest lepsze od aktualnego,
         # zaktualizuj aktualne
         if newLen <= currentBestLen:
@@ -51,10 +51,6 @@ class SA(ReadData):
         return propabilityOfAcceptance
 
     def SA(self, maxIteration, kmax, path, pathWynik):
-        # tablica zawierająca aktualnie wygenerowaną permutację
-        #newTour = np.copy(self.tour)
-        # tablica z minimalną permutacją w każdej iteracji while-a
-        #currentMinTour = np.copy(self.tour)
 
         for k in range(maxIteration):
             # obliczamy aktualną temperaturę
@@ -78,7 +74,7 @@ class SA(ReadData):
             if self.Power(self.tour, newTour, temp, path) >= probabilityOfAcceptance:
                 self.tour = newTour
 
-        u,Sj,Cj,suma_spoznien = self.wykonaj_algorytm(self.tour,path)
+        u,Sj,Cj,suma_spoznien = self.makeSchedule(self.tour, path)
         print("Suma spóźnień: ", suma_spoznien)
         with open(pathWynik,"w") as file:
             for i in range(len(Sj)):
