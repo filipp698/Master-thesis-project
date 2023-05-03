@@ -1,16 +1,16 @@
 Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana technologia radiowa);Badane pasmo 5G;Dodatkowe pasmo 5G;Badane pasmo 4G;D³ugoœæ trwania sesji (badania poszczególnych  funkcji) [tyg];Po¿¹dany tydzieñ zakoñczenia sesji [tyg];Alternatywna lokalizacja testow
-1;OnePlus;9s;Non-Standalone (NSA);n77;n78;-;3;6;Ulm
+1;OnePlus;9s;Non-Standalone (NSA);n77;n78;-;3;12;Ulm
 2;Apple;13;Non-Standalone (NSA);n77;-;b77;4;8;Dallas
-3;Oppo;9X;Standalone (SA);n40;n41;-;6;6;Ulm
+3;Oppo;9X;Standalone (SA);n40;n41;-;6;9;Ulm
 4;Xiaomi;12 pro;Non-Standalone (NSA);n47;-;b47;8;10;Pekin
 5;OnePlus;7;Standalone (SA);n20;n28;b28;4;12;Dallas
 6;Samsung;21;Standalone (SA);n1;n3;-;2;14;Kraków
 7;Vivo;x60;Non-Standalone (NSA);n14;-;-;3;4;Pekin
 8;Apple;12 pro;Standalone (SA);n8;-;b8;6;12;Ulm
-9;Samsung;Ultra;Non-Standalone (NSA);n1;n28;-;4;9;Kraków
-10;Samsung;S22;Standalone (SA);n41;-;-;7;14;Pekin
+9;Samsung;Ultra;Non-Standalone (NSA);n1;n28;-;4;24;Kraków
+10;Samsung;S22;Standalone (SA);n41;-;-;4;52;Pekin
 11;OnePlus;9s;Standalone (SA);n8;-;b1;3;10;Ulm
-12;Apple;14;Standalone (SA);n41;-;-;4;12;Dallas
+12;Apple;14;Standalone (SA);n41;-;-;4;16;Dallas
 13;Oppo;9X;Standalone (SA);n1;n5;-;4;14;Ulm
 14;Xiaomi;13 pro;Standalone (SA);n14;-;b14;6;16;Pekin
 15;OnePlus;35;Standalone (SA);n40;n41;b40;3;11;Dallas
@@ -18,50 +18,50 @@ Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana techn
 17;Vivo;x61;Standalone (SA);n47;-;b40;3;5;Pekin
 18;Apple;13 pro;Standalone (SA);n41;-;b41;2;12;Ulm
 19;Samsung;Ultra;Standalone (SA);n41;-;-;6;10;Kraków
-20;Samsung;S23;Standalone (SA);n77;-;b77;7;20;Pekin
+20;Samsung;S23;Standalone (SA);n77;-;b77;4;48;Pekin
 21;OnePlus;9s;Standalone (SA);n28;n20;-;4;14;Ulm
 22;Apple;S23;Standalone (SA);n14;-;b1;3;9;Dallas
-23;Oppo;9s;Standalone (SA);n5;n8;-;6;8;Ulm
+23;Oppo;9s;Standalone (SA);n5;n8;-;6;24;Ulm
 24;Oppo;15;Standalone (SA);n1;-;b1;5;15;Pekin
-25;Xiaomi;9X;Standalone (SA);n28;n20;b28;3;19;Dallas
-26;OnePlus;14 pro;Standalone (SA);n1;n5;b3;7;25;Kraków
+25;Xiaomi;9X;Standalone (SA);n28;n20;-;3;25;Dallas
+26;OnePlus;14 pro;Standalone (SA);n1;n5;b3;6;45;Kraków
 27;Samsung;63;Standalone (SA);n3;-;b3;4;15;Pekin
 28;Vivo;77;Standalone (SA);n1;n14;-;5;16;Ulm
 29;Apple;x62;Standalone (SA);n40;n41;-;3;21;Kraków
 30;Samsung;14 pro;Standalone (SA);n3;n8;b8;4;10;Pekin
 31;Samsung;Ultra;Standalone (SA);n78;n78;-;2;18;Ulm
 32;OnePlus;S24;Standalone (SA);n77;-;b77;3;25;Dallas
-33;Apple;9s;Standalone (SA);n1;n3;b3;7;41;Ulm
+33;Apple;9s;Standalone (SA);n1;n3;b3;2;41;Ulm
 34;Oppo;S24;Standalone (SA);n5;n20;-;4;17;Pekin
-35;Oppo;9s;Standalone (SA);n1;n28;b28;8;32;Dallas
+35;Oppo;9s;Standalone (SA);n1;n28;b28;2;32;Dallas
 36;Xiaomi;16;Standalone (SA);n14;-;b3;4;39;Kraków
-37;OnePlus;9X;Standalone (SA);n1;n5;-;6;45;Pekin
+37;OnePlus;9X;Standalone (SA);n1;n5;-;6;53;Pekin
 38;Samsung;15 pro;Standalone (SA);n1;-;-;4;28;Ulm
 39;Vivo;91;Standalone (SA);n3;n20;-;6;31;Kraków
-40;Apple;105;Standalone (SA);n14;-;b14;5;20;Pekin
+40;Apple;105;Standalone (SA);n14;-;b14;3;52;Pekin
 41;Samsung;x63;Standalone (SA);n20;-;b20;5;10;Ulm
 42;Samsung;15 pro;Standalone (SA);n41;n47;-;4;8;Dallas
 43;OnePlus;Ultra;Standalone (SA);n77;n78;b77;3;6;Ulm
 44;Apple;S25;Standalone (SA);n47;-;b47;3;8;Pekin
-45;Oppo;9s;Standalone (SA);n40;b41;b40;4;25;Dallas
+45;Oppo;9s;Standalone (SA);n40;-;b40;4;25;Dallas
 46;Oppo;S25;Standalone (SA);n20;n8;-;6;28;Kraków
 47;Xiaomi;9s;Standalone (SA);n14;-;b3;4;31;Pekin
 48;OnePlus;17;Standalone (SA);n1;n5;-;5;28;Ulm
 49;Samsung;9X;Standalone (SA);n5;n8;b5;6;30;Kraków
 50;Vivo;16 pro;Standalone (SA);n14;n20;-;3;10;Pekin
-51;OnePlus;x63;Standalone (SA);n20;n8;-;4;12;
-52;Samsung;15 pro;Standalone (SA);n14;-;b3;8;20;
+51;OnePlus;x63;Standalone (SA);n20;n8;-;2;12;
+52;Samsung;15 pro;Standalone (SA);n14;-;b3;3;20;
 53;Vivo;Ultra;Standalone (SA);n1;n5;-;3;25;
 54;Apple;S25;Standalone (SA);n1;-;-;4;31;
 55;Samsung;9s;Standalone (SA);n3;n20;-;5;14;
-56;Samsung;S25;Standalone (SA);n14;-;b14;3;7;
+56;Samsung;S25;Standalone (SA);n14;-;b14;3;9;
 57;OnePlus;9s;Standalone (SA);n20;n28;b20;2;8;
 58;Apple;17;Standalone (SA);n41;-;b14;3;21;
-59;Oppo;9X;Standalone (SA);n40;n78;-;7;45;
+59;Oppo;9X;Standalone (SA);n40;n78;-;4;45;
 60;Oppo;16 pro;Standalone (SA);n8;-;b3;4;14;
 61;Xiaomi;119;Standalone (SA);n5;n1;-;5;34;
-62;OnePlus;133;Standalone (SA);n8;-;-;2;30;
-63;Samsung;x64;Standalone (SA);n40;-;-;2;19;
+62;OnePlus;133;Standalone (SA);n8;-;-;3;30;
+63;Samsung;x64;Standalone (SA);n40;-;-;2;41;
 64;Vivo;16 pro;Standalone (SA);n8;n28;b8;4;26;
 65;Apple;Ultra;Standalone (SA);n8;n5;-;5;14;
 66;Samsung;S26;Standalone (SA);n1;n5;b3;4;41;
@@ -70,12 +70,12 @@ Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana techn
 69;Apple;9s;Standalone (SA);n14;n20;-;8;48;
 70;Oppo;18;Standalone (SA);n8;n14;-;4;17;
 71;Oppo;9X;Standalone (SA);n3;-;b1;3;16;
-72;Xiaomi;17 pro;Standalone (SA);n1;n5;-;4;10;
+72;Xiaomi;17 pro;Standalone (SA);n1;n5;-;4;25;
 73;OnePlus;x64;Standalone (SA);n5;n20;-;5;12;
-74;Samsung;16 pro;Standalone (SA);n1;n28;b28;7;51;
-75;Vivo;Ultra;Standalone (SA);n40;n78;b47;6;17;
-76;OnePlus;S26;Standalone (SA);n41;n77;-;8;14;
-77;Samsung;9s;Standalone (SA);n20;n3;-;8;17;
+74;Samsung;16 pro;Standalone (SA);n1;n28;b28;6;51;
+75;Vivo;Ultra;Standalone (SA);n40;-;b47;6;43;
+76;OnePlus;S26;Standalone (SA);n41;n77;-;3;14;
+77;Samsung;9s;Standalone (SA);n20;n3;-;8;25;
 78;Vivo;S26;Standalone (SA);n5;n1;b5;3;21;
 79;Apple;9s;Standalone (SA);n8;-;b5;4;14;
 80;Samsung;18;Standalone (SA);n14;n5;-;5;35;
@@ -83,19 +83,19 @@ Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana techn
 82;OnePlus;17 pro;Standalone (SA);n3;n1;-;3;30;
 83;Apple;147;Standalone (SA);n5;n8;b5;4;20;
 84;Oppo;161;Standalone (SA);n14;n20;-;5;25;
-85;Oppo;x65;Standalone (SA);n1;-;b1;7;15;
-86;Xiaomi;17 pro;Standalone (SA);n3;-;-;6;25;
-87;OnePlus;Ultra;Standalone (SA);n5;n1;b5;8;46;
+85;Oppo;x65;Standalone (SA);n1;-;b1;6;22;
+86;Xiaomi;17 pro;Standalone (SA);n3;-;-;3;25;
+87;OnePlus;Ultra;Standalone (SA);n5;n1;b5;5;46;
 88;Samsung;S27;Standalone (SA);n8;-;b5;6;18;
 89;Vivo;9s;Standalone (SA);n14;n5;-;2;28;
 90;Apple;S27;Standalone (SA);n20;-;b28;3;34;
-91;Samsung;9s;Standalone (SA);n77;n78;-;8;38;
-92;Samsung;19;Standalone (SA);n40;-;b40;7;41;
-93;OnePlus;9X;Standalone (SA);n41;n77;b77;5;26;
+91;Samsung;9s;Standalone (SA);n77;n78;-;4;38;
+92;Samsung;19;Standalone (SA);n40;-;b40;5;41;
+93;OnePlus;9X;Standalone (SA);n41;n77;-;5;43;
 94;Apple;18 pro;Standalone (SA);n40;n47;-;6;23;
-95;Oppo;x65;Standalone (SA);n77;-;-;9;36;
+95;Oppo;x65;Standalone (SA);n77;-;-;4;38;
 96;Oppo;17 pro;Standalone (SA);n28;n20;-;5;14;
-97;Xiaomi;Ultra;Standalone (SA);n8;-;b28;7;53;
-98;OnePlus;S27;Standalone (SA);n28;n8;b1;4;31;
+97;Xiaomi;Ultra;Standalone (SA);n8;-;b28;4;53;
+98;OnePlus;S27;Standalone (SA);n28;n8;-;4;31;
 99;Samsung;9s;Standalone (SA);n20;-;-;2;20;
-100;Vivo;S27;Standalone (SA);n14;n8;b8;8;42;
+100;Vivo;S27;Standalone (SA);n14;n8;b8;3;42;

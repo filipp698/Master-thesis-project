@@ -1,77 +1,77 @@
 Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana technologia radiowa);Badane pasmo 5G;Dodatkowe pasmo 5G;Badane pasmo 4G;D³ugoœæ trwania sesji (badania poszczególnych  funkcji) [tyg];Po¿¹dany tydzieñ zakoñczenia sesji [tyg];Alternatywna lokalizacja testow
 1;OnePlus;9s;Non-Standalone (NSA);n8;n5;-;3;4;Ulm
 2;Apple;13;Non-Standalone (NSA);n14;-;b14;5;5;Dallas
-3;Oppo;9X;Standalone (SA);n20;n28;b28;3;7;Ulm
+3;Oppo;9X;Standalone (SA);n20;n28;b28;3;18;Ulm
 4;Xiaomi;12 pro;Non-Standalone (NSA);n1;n3;-;2;9;Pekin
 5;OnePlus;7;Standalone (SA);n40;-;b40;3;11;Dallas
 6;Samsung;21;Standalone (SA);n41;-;-;6;12;Kraków
-7;Vivo;x60;Non-Standalone (NSA);n77;-;b77;4;8;Pekin
+7;Vivo;x60;Non-Standalone (NSA);n77;-;b77;4;15;Pekin
 8;Apple;12 pro;Standalone (SA);n5;n8;-;5;6;Ulm
-9;Samsung;Ultra;Non-Standalone (NSA);n1;-;b1;6;12;Kraków
+9;Samsung;Ultra;Non-Standalone (NSA);n1;-;b1;4;12;Kraków
 10;Samsung;S22;Standalone (SA);n41;n47;-;3;10;Pekin
-11;OnePlus;9s;Standalone (SA);n8;n1;b8;3;8;Pary?
+11;OnePlus;9s;Standalone (SA);n8;n1;b8;3;25;Pary?
 12;Apple;14;Standalone (SA);n14;n5;-;4;14;Warszawa
 13;Oppo;9X;Standalone (SA);n3;-;b3;5;16;Hamburg
-14;Xiaomi;13 pro;Standalone (SA);n3;n5;-;6;19;Pekin
+14;Xiaomi;13 pro;Standalone (SA);n3;n5;-;6;42;Pekin
 15;OnePlus;35;Standalone (SA);n28;-;-;4;21;Ulm
 16;Samsung;49;Standalone (SA);n20;-;b20;5;14;Kraków
-17;Vivo;x61;Standalone (SA);n40;n41;-;8;15;Pekin
+17;Vivo;x61;Standalone (SA);n40;n41;-;4;15;Pekin
 18;Apple;13 pro;Standalone (SA);n77;n78;-;3;9;Pary?
 19;Samsung;Ultra;Standalone (SA);n47;-;b40;2;7;Warszawa
 20;Samsung;S23;Standalone (SA);n41;-;b41;2;6;Pary?
 21;OnePlus;9s;Standalone (SA);n77;n41;-;5;10;Warszawa
 22;Apple;15;Standalone (SA);n28;n20;-;6;12;Hamburg
 23;Oppo;9X;Standalone (SA);n14;-;b1;3;14;Pekin
-24;Xiaomi;14 pro;Standalone (SA);n1;-;b3;4;16;Ulm
+24;Xiaomi;14 pro;Standalone (SA);n1;-;b3;4;53;Ulm
 25;OnePlus;63;Standalone (SA);n20;-;b28;4;18;Pekin
 26;Samsung;77;Standalone (SA);n20;n28;b28;3;21;Ulm
 27;Vivo;x62;Standalone (SA);n1;n3;-;5;24;Dallas
 28;Apple;14 pro;Standalone (SA);n77;n78;-;6;20;Ulm
 29;Samsung;Ultra;Standalone (SA);n47;-;b40;4;10;Pekin
 30;Samsung;S24;Standalone (SA);n41;n47;-;6;8;Dallas
-31;OnePlus;9s;Standalone (SA);n8;-;b1;8;17;Kraków
-32;Apple;16;Standalone (SA);n41;-;-;6;22;Pekin
+31;OnePlus;9s;Standalone (SA);n8;-;b1;4;17;Kraków
+32;Apple;16;Standalone (SA);n41;-;-;6;48;Pekin
 33;Oppo;9X;Standalone (SA);n40;n41;-;5;24;Ulm
 34;Xiaomi;15 pro;Standalone (SA);n47;-;b47;4;15;Kraków
 35;OnePlus;91;Standalone (SA);n28;n20;-;2;14;Pekin
 36;Samsung;105;Standalone (SA);n14;-;b1;3;12;Pary?
 37;Vivo;x63;Standalone (SA);n47;-;b47;2;10;Warszawa
 38;Apple;15 pro;Standalone (SA);n20;n28;b28;8;16;Hamburg
-39;Samsung;Ultra;Standalone (SA);n77;n78;-;4;28;Pekin
+39;Samsung;Ultra;Standalone (SA);n77;n78;-;3;28;Pekin
 40;Samsung;S25;Standalone (SA);n8;n14;b14;6;31;Ulm
 41;OnePlus;9s;Standalone (SA);n5;n8;-;5;25;Kraków
 42;Apple;17;Standalone (SA);n14;n20;b14;6;27;Pekin
 43;Oppo;9X;Standalone (SA);n3;n28;-;3;26;Pary?
 44;Xiaomi;16 pro;Standalone (SA);n1;-;-;2;21;Warszawa
-45;OnePlus;119;Standalone (SA);n8;n14;-;4;12;Pary?
+45;OnePlus;119;Standalone (SA);n8;n14;-;4;16;Pary?
 46;Samsung;133;Standalone (SA);n40;n41;-;5;20;Warszawa
-47;Vivo;x64;Standalone (SA);n3;n8;b3;4;14;Hamburg
-48;Apple;16 pro;Standalone (SA);n77;-;-;6;18;Pekin
+47;Vivo;x64;Standalone (SA);n3;n8;b3;4;51;Hamburg
+48;Apple;16 pro;Standalone (SA);n77;-;-;2;18;Pekin
 49;Samsung;Ultra;Standalone (SA);n14;-;b14;4;24;Ulm
 50;Samsung;S26;Standalone (SA);n8;n28;-;3;32;Pekin
 51;OnePlus;9s;Standalone (SA);n47;-;b47;3;12;Ulm
 52;Apple;18;Standalone (SA);n28;n20;-;4;14;Dallas
 53;Oppo;9X;Standalone (SA);n14;-;b1;4;15;Ulm
-54;Xiaomi;17 pro;Standalone (SA);n47;-;b47;3;13;Pekin
-55;OnePlus;147;Standalone (SA);n20;n28;b28;5;14;Dallas
+54;Xiaomi;17 pro;Standalone (SA);n47;-;b47;3;21;Pekin
+55;OnePlus;147;Standalone (SA);n20;n28;b28;5;41;Dallas
 56;Samsung;161;Standalone (SA);n77;-;b77;6;18;Kraków
 57;Vivo;x65;Standalone (SA);n5;n8;-;4;22;Pekin
-58;Apple;17 pro;Standalone (SA);n1;-;b1;6;11;Ulm
+58;Apple;17 pro;Standalone (SA);n1;-;b1;6;48;Ulm
 59;Samsung;Ultra;Standalone (SA);n41;n47;-;8;12;Kraków
 60;Samsung;S27;Standalone (SA);n8;n1;b8;6;18;Pekin
 61;OnePlus;9s;Standalone (SA);n14;n5;-;5;32;Pary?
-62;Apple;19;Standalone (SA);n3;-;b3;4;14;Warszawa
+62;Apple;19;Standalone (SA);n3;-;b3;4;25;Warszawa
 63;Oppo;9X;Standalone (SA);n8;n14;b14;2;21;Hamburg
 64;Xiaomi;18 pro;Standalone (SA);n5;n8;-;3;17;Pekin
-65;OnePlus;175;Standalone (SA);n14;n20;b14;2;20;Ulm
+65;OnePlus;175;Standalone (SA);n14;n20;b14;2;25;Ulm
 66;Samsung;189;Standalone (SA);n3;n28;-;8;25;Kraków
 67;Vivo;x66;Standalone (SA);n1;n3;-;4;10;Pekin
 68;Apple;18 pro;Standalone (SA);n40;-;b40;5;15;Pary?
 69;Samsung;Ultra;Standalone (SA);n41;-;-;3;18;Warszawa
 70;Samsung;S28;Standalone (SA);n77;-;b77;2;12;Pary?
 71;OnePlus;9s;Standalone (SA);n5;n8;-;4;14;Warszawa
-72;Apple;20;Standalone (SA);n1;-;b1;7;18;Hamburg
-73;Oppo;9X;Standalone (SA);n3;n8;b3;8;20;Pekin
+72;Apple;20;Standalone (SA);n1;-;b1;7;48;Hamburg
+73;Oppo;9X;Standalone (SA);n3;n8;b3;8;28;Pekin
 74;Xiaomi;19 pro;Standalone (SA);n77;-;-;3;33;Ulm
 75;OnePlus;203;Standalone (SA);n41;n47;-;5;34;Pekin
 76;Samsung;217;Standalone (SA);n5;n20;b5;4;38;Ulm
@@ -79,7 +79,7 @@ Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana techn
 78;Apple;19 pro;Standalone (SA);n8;n14;-;4;30;Ulm
 79;Samsung;Ultra;Standalone (SA);n40;n41;-;6;25;Pekin
 80;Samsung;S29;Standalone (SA);n77;n78;-;3;28;Dallas
-81;OnePlus;9s;Standalone (SA);n40;-;b40;7;14;Kraków
+81;OnePlus;9s;Standalone (SA);n40;-;b40;2;14;Kraków
 82;Apple;21;Standalone (SA);n47;-;b77;5;32;Pekin
 83;Oppo;9X;Standalone (SA);n1;n5;-;3;41;Ulm
 84;Xiaomi;20 pro;Standalone (SA);n14;-;b14;3;23;Kraków
@@ -87,15 +87,15 @@ Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana techn
 86;Samsung;245;Standalone (SA);n1;n3;b3;4;23;Pary?
 87;Vivo;x68;Standalone (SA);n3;n8;b3;5;21;Warszawa
 88;Apple;20 pro;Standalone (SA);n77;-;-;6;10;Hamburg
-89;Samsung;Ultra;Standalone (SA);n14;-;b14;7;12;Pekin
-90;Samsung;S30;Standalone (SA);n8;n28;-;6;9;Ulm
-91;OnePlus;9s;Standalone (SA);n20;-;b20;5;8;Kraków
-92;Apple;22;Standalone (SA);n40;n41;-;5;6;Pekin
+89;Samsung;Ultra;Standalone (SA);n14;-;b14;3;12;Pekin
+90;Samsung;S30;Standalone (SA);n8;n28;-;6;25;Ulm
+91;OnePlus;9s;Standalone (SA);n20;-;b20;5;51;Kraków
+92;Apple;22;Standalone (SA);n40;n41;-;5;48;Pekin
 93;Oppo;9X;Standalone (SA);n77;n78;-;3;15;Pary?
 94;Xiaomi;21 pro;Standalone (SA);n47;-;b40;3;12;Warszawa
 95;OnePlus;259;Standalone (SA);n41;-;b41;4;14;Pary?
 96;Samsung;273;Standalone (SA);n77;n41;-;4;21;Warszawa
 97;Vivo;x69;Standalone (SA);n28;n20;-;5;20;Hamburg
-98;Apple;21 pro;Standalone (SA);n14;-;b1;7;10;Pekin
+98;Apple;21 pro;Standalone (SA);n14;-;b1;5;50;Pekin
 99;Samsung;Ultra;Standalone (SA);n1;-;b3;3;15;Ulm
-100;Samsung;S31;Standalone (SA);n14;n20;-;2;10;Pekin
+100;Samsung;S31;Standalone (SA);n14;n20;-;2;17;Pekin

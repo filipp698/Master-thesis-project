@@ -15,8 +15,8 @@ class SA(ReadData):
 
     def createFirstPermutation(self, path):
         _, iloscZamowien, _, _, _, _, _, _, permutation = self.readData(path)
-        self.firstPermutation = self.generateRandomPermutation(permutation)
-        #self.firstPermutation = permutation
+        #self.firstPermutation = self.generateRandomPermutation(permutation)
+        self.firstPermutation = permutation
         self.n = iloscZamowien
 
     def swap(self, currentTour, i, j):

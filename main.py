@@ -7,7 +7,7 @@ import TabuSearch
 import SA
 
 # ścieżki do plików testowych
-pathOrder = "daneTestowe\\dane10_1.csv"
+pathOrder = "daneTestowe\\dane50_4.csv"
 pathZasoby = "Dane\\zasoby.csv"
 pathData = "Dane\\dane_sparsowane.txt"
 pathWynik = "Wyniki\\wyniki_" + pathOrder[-12:-4] + ".txt"
@@ -24,39 +24,39 @@ data.parseTL(pathOrder, pathZasoby, pathData)
 # alg.saveResults(pathData,pathWynik)
 
 # # Algorytm SA
-# SA_start = time.time()
-# symulowane = SA.SA(pathData)
-# symulowane.createFirstPermutation(pathData)
-# # określenie max liczby interacji dla SA
-# maxIterationNumber = 10**4
-# # określenie max temperatury dla SA
-# maxTemperature = 45
-# symulowane.SA(maxIterationNumber, maxTemperature,pathData,pathWynikSA)
-# SA_end = time.time()
-# duration_SA = SA_end - SA_start
-# print("Czas trwania SA: ", round(duration_SA,3), "[s]")
+SA_start = time.time()
+symulowane = SA.SA(pathData)
+symulowane.createFirstPermutation(pathData)
+# określenie max liczby interacji dla SA
+maxIterationNumber = 10**5
+# określenie max temperatury dla SA
+maxTemperature = 45
+symulowane.SA(maxIterationNumber, maxTemperature,pathData,pathWynikSA)
+SA_end = time.time()
+duration_SA = SA_end - SA_start
+print("Czas trwania SA: ", round(duration_SA,3), "[s]")
 
 ##Dane do algorytmu Tabu Search
-lengthOfTabu = 7
-option = "flip"
-iterationNumber = 100
-cycleNumberMax = 5
-isReactiveTabu = False
-reactiveInterval = 50
-
-tabu_start = time.time()
-tabu = TabuSearch.TabuSearch(pathData)
-tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,pathData, pathWynikTS)
-tabu_end = time.time()
-duration_tabu = tabu_end - tabu_start
-print("-------------------")
-print("First permutation: " + str(tabu.firstPermutation))
-print("Suma spóźnien dla pierwszej permutacji: " + str(tabu.suma_kar))
-print("-------------------")
-print("Best permutation: " + str(tabu.bestPermutation))
-print("Suma spóźnien dla najlepszej permutacji: " + str(tabu.bestDelay))
-print("-------------------")
-print("Czas trwania Tabu: ", round(duration_tabu,2), "[s]")
+# lengthOfTabu = 7
+# option = "swap"
+# iterationNumber = 100
+# cycleNumberMax = 5
+# isReactiveTabu = False
+# reactiveInterval = 50
+#
+# tabu_start = time.time()
+# tabu = TabuSearch.TabuSearch(pathData)
+# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,pathData, pathWynikTS)
+# tabu_end = time.time()
+# duration_tabu = tabu_end - tabu_start
+# print("-------------------")
+# print("First permutation: " + str(tabu.firstPermutation))
+# print("Suma spóźnien dla pierwszej permutacji: " + str(tabu.suma_kar))
+# print("-------------------")
+# print("Best permutation: " + str(tabu.bestPermutation))
+# print("Suma spóźnien dla najlepszej permutacji: " + str(tabu.bestDelay))
+# print("-------------------")
+# print("Czas trwania Tabu: ", round(duration_tabu,2), "[s]")
 
 # np.savetxt("funkcja_celu_best.txt", tabu.permutationHistoryGlobal, comments = "", fmt = '%f')
 # np.savetxt("funkcja_celu_local_best.txt", tabu.permutationHistoryLocal, comments = "", fmt = '%f')
