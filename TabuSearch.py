@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import sys
 import Queue_
@@ -20,6 +22,7 @@ class TabuSearch(ReadData):
         self.firstPermutation = permutation
 
     def execute(self, startPermutation, lenghtOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,path,pathWynik):
+        start1 = time.time()
         _,_,_,Tj = self.makeSchedule(self.firstPermutation, path)
         isCycleNumberMaxReached = False
         intervalIterator = 0
@@ -31,7 +34,8 @@ class TabuSearch(ReadData):
         ## KONIEC ALGORYTMU
 
         for xx in range(iterationNumber):
-            localBestDelay = sys.maxsize
+            start_iteration = time.time()
+            localBestDelay = 9999
             neighborhood = self.generateNeighborhood(permutation, option)
             for neighborPermutation in neighborhood:
                 isInTabu, index = tabuList.contains(neighborPermutation)
@@ -74,18 +78,26 @@ class TabuSearch(ReadData):
                         intervalIterator = 0
                     else:
                         return self.bestPermutation
-            self.bestPermutationHistory.append(self.bestDelay)
-            self.localBestpermutationHistory.append(localBestDelay)
-            self.permutationHistoryGlobal.append(self.bestPermutation)
-            self.permutationHistoryLocal.append(localBestPermutation)
-
+            # self.bestPermutationHistory.append(self.bestDelay)
+            # self.localBestpermutationHistory.append(localBestDelay)
+            # self.permutationHistoryGlobal.append(self.bestPermutation)
+            # self.permutationHistoryLocal.append(localBestPermutation)
+            end_iteration = time.time()
+            durationOfIteration = end_iteration - start_iteration
+            print("Czas trwania iteracji: ", round(durationOfIteration, 3), "[s]")
+            end1 = time.time()
+            durationAlgorithm = end1 - start1
+            #zapis wyników
             u, Sj, Cj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
             with open(pathWynik + option + ".txt", "w") as file:
                 for i in range(len(Sj)):
                     file.write(str(Sj[i]) + " ")
                     file.write(str(Cj[i]) + " : ")
                     file.write(str(u[i]) + "\n")
+                file.write('Początkowa suma spoznien: ' + str(self.suma_kar) + '\n')
                 file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
+                file.write('Czas trwania iteracji wynosi: ' + str(round(durationOfIteration,3)) + " [s]" + '\n')
+                file.write('Czas trwania algorytmu: ' + str(round(durationAlgorithm,3)) + " [s]" + '\n')
 
         return self.bestPermutation
 
@@ -197,5 +209,5 @@ class TabuSearch(ReadData):
         return neighborhood
 
     def generateRandomPermutation(self, permutation):
-        permutation[1 : -1] = np.random.permutation(permutation[1:-1])
+        permutation = np.random.permutation(permutation)
         return permutation

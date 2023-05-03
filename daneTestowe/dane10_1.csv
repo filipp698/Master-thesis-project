@@ -1,11 +1,11 @@
 Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana technologia radiowa);Badane pasmo 5G;Dodatkowe pasmo 5G;Badane pasmo 4G;D³ugoœæ trwania sesji (badania poszczególnych  funkcji) [tyg];Po¿¹dany tydzieñ zakoñczenia sesji [tyg];Alternatywna lokalizacja testów;;;;;;;Dodatkowe5G
-1;OnePlus;9s;Standalone (SA);n5;n1;-;2;5;Ulm;;;;;;;
-2;Apple;13;Non-Standalone (NSA);n20;-;b28;4;8;Dallas;;;;;;;
-3;Oppo;9X;Non-Standalone (NSA);n1;-;n3;3;11;Ulm;;;;;;;
-4;Xiaomi;12pro;Non-Standalone (NSA);n8;-;b8;4;12;Pekin;;;;;;;
-5;OnePlus;7;Non-Standalone (NSA);n40;-;b40;5;6;Dallas;;;;;;;
-6;Samsung;21;Standalone (SA);n41;n40;-;4;4;Kraków;;;;;;;
-7;Vivo;x60;Non-Standalone (NSA);n77;-;b47;3;6;Pekin;;;;;;;
-8;Apple;12pro;Standalone (SA);n77;n47;-;3;9;Ulm;;;;;;;
-9;Samsung;Ultra;Standalone (SA);n41;-;-;4;8;Kraków;;;;;;;
-10;Apple;13mini;Non-Standalone (NSA);n14;-;b5;6;15;Dallas;;;;;;;
+1;OnePlus;9s;Standalone (SA);n5;n1;-;4;6;Ulm;;;;;;;
+2;Apple;13;Non-Standalone (NSA);n20;-;b28;6;8;Dallas;;;;;;;
+3;Oppo;9X;Non-Standalone (NSA);n1;n3;b3;7;10;Ulm;;;;;;;
+4;Xiaomi;12pro;Non-Standalone (NSA);n8;-;b8;6;10;Pekin;;;;;;;
+5;OnePlus;7;Non-Standalone (NSA);n40;-;b40;4;4;Dallas;;;;;;;
+6;Samsung;21;Standalone (SA);n41;n40;-;2;3;Kraków;;;;;;;
+7;Vivo;x60;Non-Standalone (NSA);n77;-;b47;6;8;Pekin;;;;;;;
+8;Apple;12pro;Standalone (SA);n77;n47;-;6;9;Ulm;;;;;;;
+9;Samsung;Ultra;Standalone (SA);n41;n78;-;5;6;Kraków;;;;;;;
+10;Apple;13mini;Non-Standalone (NSA);n14;-;b5;3;5;Dallas;;;;;;;

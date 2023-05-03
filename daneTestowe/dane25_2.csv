@@ -1,9 +1,9 @@
 Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana technologia radiowa);Badane pasmo 5G;Dodatkowe pasmo 5G;Badane pasmo 4G;D³ugoœæ trwania sesji (badania poszczególnych  funkcji) [tyg];Po¿¹dany tydzieñ zakoñczenia sesji [tyg];Alternatywna lokalizacja testow
 1;OnePlus;9s;Non-Standalone (NSA);n8;n5;-;3;4;Ulm
 2;Apple;13;Non-Standalone (NSA);n14;-;b14;5;5;Dallas
-3;Oppo;9X;Standalone (SA);n20;n28;b28;3;7;Ulm
+3;Oppo;9X;Standalone (SA);n20;n28;b28;5;7;Ulm
 4;Xiaomi;12 pro;Non-Standalone (NSA);n1;n3;-;2;9;Pekin
-5;OnePlus;7;Standalone (SA);n40;-;b40;3;11;Dallas
+5;OnePlus;7;Standalone (SA);n40;-;b40;6;11;Dallas
 6;Samsung;21;Standalone (SA);n41;-;-;6;12;Kraków
 7;Vivo;x60;Non-Standalone (NSA);n77;-;b77;4;8;Pekin
 8;Apple;12 pro;Standalone (SA);n5;n8;-;5;6;Ulm
@@ -14,10 +14,10 @@ Numer zamówienia;Zleceniodawca;Model telefonu;Rodzaj sesji (wykorzystywana techn
 13;;;Standalone (SA);n3;-;b3;5;16;Hamburg
 14;;;Standalone (SA);n3;n5;-;6;19;Pekin
 15;;;Standalone (SA);n28;-;-;4;21;Ulm
-16;;;Standalone (SA);n20;-;b20;5;14;Kraków
+16;;;Standalone (SA);n20;-;b20;7;14;Kraków
 17;;;Standalone (SA);n40;n41;-;8;15;Pekin
 18;;;Standalone (SA);n77;n78;-;3;9;Pary?
-19;;;Standalone (SA);n47;-;b40;2;7;Warszawa
+19;;;Standalone (SA);n47;-;b40;4;7;Warszawa
 20;;;Standalone (SA);n41;-;b41;2;6;Pary?
 21;;;Standalone (SA);n77;n41;-;5;10;Warszawa
 22;;;Standalone (SA);n28;n20;-;6;12;Hamburg
