@@ -7,7 +7,7 @@ import TabuSearch
 import SA
 
 # ścieżki do plików testowych
-pathOrder = "daneTestowe\\dane50_4.csv"
+pathOrder = "daneTestowe\\dane100_2.csv"
 pathZasoby = "Dane\\zasoby.csv"
 pathData = "Dane\\dane_sparsowane.txt"
 pathWynik = "Wyniki\\wyniki_" + pathOrder[-12:-4] + ".txt"
@@ -30,7 +30,7 @@ symulowane.createFirstPermutation(pathData)
 # określenie max liczby interacji dla SA
 maxIterationNumber = 10**5
 # określenie max temperatury dla SA
-maxTemperature = 45
+maxTemperature = 90
 symulowane.SA(maxIterationNumber, maxTemperature,pathData,pathWynikSA)
 SA_end = time.time()
 duration_SA = SA_end - SA_start

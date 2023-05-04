@@ -45,10 +45,10 @@ class SA(ReadData):
         # obliczenie prawdopodobieństwa dla akceptacji
         # wraz ze wzrostem różnicy odległości ono maleje,
         # jednakowo dla temperatury - im mniejsza tym mniejsze prawd.
-        propabilityOfAcceptance = 1 / difference * temperature
+        probabilityOfAcceptance = 1 / difference * temperature
         # print(propabilityOfAcceptance)
 
-        return propabilityOfAcceptance
+        return probabilityOfAcceptance
 
     def SA(self, maxIteration, kmax, path, pathWynik):
         start1 = time.time()
@@ -68,11 +68,11 @@ class SA(ReadData):
             newTour = self.swap(self.firstPermutation, i, j)
 
             # sprawdzamy, czy spełnia warunki przyjęcia
-            #randomProbability = np.random.rand()
-            random_value = random.uniform(0.8,0.99)
-            probabilityOfAcceptance = random_value * temp
+            randomProbability = random.uniform(0,1)
+            #random_value = random.uniform(0.8,0.99)
+            #probabilityOfAcceptance = random_value * temp
 
-            if self.Power(self.firstPermutation, newTour, temp, path) >= probabilityOfAcceptance:
+            if self.Power(self.firstPermutation, newTour, temp, path) >= randomProbability:
                 self.firstPermutation = newTour
             end_iteration = time.time()
             durationOfIteration = end_iteration - start_interation
@@ -91,6 +91,10 @@ class SA(ReadData):
             file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
             file.write('Czas trwania iteracji wynosi: ' + str(durationOfIteration) + " [s]" + '\n')
             file.write('Czas trwania algorytmu: ' + str(round(durationSA, 3)) + " [s]" + '\n')
+            file.write('Maksymalna temperatura: ' + str(kmax) + '\n')
+            file.write('Ilosc iteracji: ' + str(maxIteration) + '\n')
+
+
         # print(self.tour.astype(int))
         #print("Suma spóźnień: ", (self.wykonaj_algorytm(self.tour,path)))
 

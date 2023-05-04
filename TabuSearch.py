@@ -35,7 +35,7 @@ class TabuSearch(ReadData):
 
         for xx in range(iterationNumber):
             start_iteration = time.time()
-            localBestDelay = 9999
+            localBestDelay = sys.maxsize
             neighborhood = self.generateNeighborhood(permutation, option)
             for neighborPermutation in neighborhood:
                 isInTabu, index = tabuList.contains(neighborPermutation)
