@@ -32,7 +32,7 @@ class TabuSearch(ReadData):
         tabuList.put(localBestPermutation)
         self.suma_kar = Tj
         ## KONIEC ALGORYTMU
-
+        suma = 0
         for xx in range(iterationNumber):
             start_iteration = time.time()
             localBestDelay = sys.maxsize
@@ -87,6 +87,9 @@ class TabuSearch(ReadData):
             print("Czas trwania iteracji: ", round(durationOfIteration, 3), "[s]")
             end1 = time.time()
             durationAlgorithm = end1 - start1
+            suma += durationOfIteration
+            averageIteration = suma / iterationNumber
+            #print("Średni czas trwania iteracji: ", round(averageIteration, 3), "[s]")
             #zapis wyników
             u, Sj, Cj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
             with open(pathWynik + option + ".txt", "w") as file:
@@ -96,8 +99,10 @@ class TabuSearch(ReadData):
                     file.write(str(u[i]) + "\n")
                 file.write('Początkowa suma spoznien: ' + str(self.suma_kar) + '\n')
                 file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
-                file.write('Czas trwania iteracji wynosi: ' + str(round(durationOfIteration,3)) + " [s]" + '\n')
+                #file.write('Średni trwania iteracji wynosi: ' + str(round(durationOfIteration,3)) + " [s]" + '\n')
                 file.write('Czas trwania algorytmu: ' + str(round(durationAlgorithm,3)) + " [s]" + '\n')
+                file.write('Ilosc iteracji: ' + str(xx) + '\n')
+                file.write('Średni trwania iteracji wynosi: ' + str(round(averageIteration,3)) + " [s]" + '\n')
 
         return self.bestPermutation
 

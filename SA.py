@@ -52,6 +52,7 @@ class SA(ReadData):
 
     def SA(self, maxIteration, kmax, path, pathWynik):
         start1 = time.time()
+        suma = 0
         for k in range(maxIteration):
             start_interation = time.time()
             # obliczamy aktualną temperaturę
@@ -71,15 +72,16 @@ class SA(ReadData):
             randomProbability = random.uniform(0,1)
             #random_value = random.uniform(0.8,0.99)
             #probabilityOfAcceptance = random_value * temp
-
             if self.Power(self.firstPermutation, newTour, temp, path) >= randomProbability:
                 self.firstPermutation = newTour
             end_iteration = time.time()
             durationOfIteration = end_iteration - start_interation
+            suma += durationOfIteration
             #print("Czas trwania iteracji wynosi: ", durationOfIteration)
-
         end1 = time.time()
         durationSA = end1 - start1
+        srednia = suma/maxIteration
+        print("Średnia wartość iteracji: ", srednia)
 
         u,Sj,Cj,suma_spoznien = self.makeSchedule(self.firstPermutation, path)
         print("Suma spóźnień: ", suma_spoznien)
@@ -93,6 +95,7 @@ class SA(ReadData):
             file.write('Czas trwania algorytmu: ' + str(round(durationSA, 3)) + " [s]" + '\n')
             file.write('Maksymalna temperatura: ' + str(kmax) + '\n')
             file.write('Ilosc iteracji: ' + str(maxIteration) + '\n')
+            file.write('Ilosc iteracji: ' + str(srednia) + '\n')
 
 
         # print(self.tour.astype(int))
