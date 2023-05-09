@@ -88,7 +88,6 @@ class TabuSearch(ReadData):
             end1 = time.time()
             durationAlgorithm = end1 - start1
             suma += durationOfIteration
-            averageIteration = suma / iterationNumber
             #print("Średni czas trwania iteracji: ", round(averageIteration, 3), "[s]")
             #zapis wyników
             u, Sj, Cj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
@@ -99,10 +98,12 @@ class TabuSearch(ReadData):
                     file.write(str(u[i]) + "\n")
                 file.write('Początkowa suma spoznien: ' + str(self.suma_kar) + '\n')
                 file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
-                #file.write('Średni trwania iteracji wynosi: ' + str(round(durationOfIteration,3)) + " [s]" + '\n')
+                file.write('Średni trwania iteracji wynosi: ' + str(round(durationOfIteration,3)) + " [s]" + '\n')
                 file.write('Czas trwania algorytmu: ' + str(round(durationAlgorithm,3)) + " [s]" + '\n')
                 file.write('Ilosc iteracji: ' + str(xx) + '\n')
-                file.write('Średni trwania iteracji wynosi: ' + str(round(averageIteration,3)) + " [s]" + '\n')
+                #file.write('Średni trwania iteracji wynosi: ' + str(round(averageIteration,3)) + " [s]" + '\n')
+                #averageIteration = suma / xx
+                #print("Średni czas trwania iteracji: ", round(averageIteration, 3), "[s]")
 
         return self.bestPermutation
 
