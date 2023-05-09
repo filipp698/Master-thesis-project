@@ -29,35 +29,9 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    # def Power(self, currentBestPermutation, newPermutation, temperature, path):
-    #     # obliczenie długości obu tras
-    #     _,_,_,currentBestLen = self.makeSchedule(currentBestPermutation, path)
-    #     _,_,_,newLen = self.makeSchedule(newPermutation, path)
-    #     # jesli wylosowane rozwiązanie jest lepsze od aktualnego,
-    #     # zaktualizuj aktualne
-    #     # if newLen <= currentBestLen:
-    #     #     # zawsze będzie większe od zakresu [0, 1] -> akcpetujemy wynik jako lepszy
-    #     #     return 2
-    #     # obliczenie różnicy spoznien pomiędzy permutacjami
-    #     #difference = currentBestLen - newLen
-    #     delta = newLen - currentBestLen
-    #     if delta < 0:
-    #         return 2
-    #     else:
-    #         probability = math.exp(-delta/temperature)
-    #     # obliczenie prawdopodobieństwa dla akceptacji
-    #     # wraz ze wzrostem różnicy odległości ono maleje,
-    #     # jednakowo dla temperatury - im mniejsza tym mniejsze prawd.
-    #     #propabilityOfAcceptance = 1 / difference * temperature
-    #     #propabilityOfAcceptance = math.exp(difference / temperature)
-    #     # print(propabilityOfAcceptance)
-    #
-    #     return probability
-
-    def SA(self, maxIteration, tmax, alpha, path, pathWynik):
+    def SA(self, maxIteration, tmax, tmin, alpha, path, pathWynik):
         start1 = time.time()
         temp = tmax
-        tmin = 0.1
         while(temp > tmin):
             start2 = time.time()
             for k in range(maxIteration):
@@ -82,7 +56,7 @@ class SA(ReadData):
                 durationOfIteration = end_iteration - start_interation
                 #print("Czas trwania iteracji wynosi: ", durationOfIteration)
             end2 = time.time()
-            print("Czas while: ", end2-start2)
+            #print("Czas while: ", end2-start2)
             temp *= alpha
         end1 = time.time()
         durationSA = end1 - start1
