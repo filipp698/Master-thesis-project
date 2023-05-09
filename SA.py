@@ -1,8 +1,8 @@
 import random
 import time
+import math
 
 import numpy as np
-import matplotlib.pyplot as plt
 from ReadData import ReadData
 
 
@@ -29,55 +29,60 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    def Power(self, currentBestPermutation, newPermutation, temperature, path):
-        # obliczenie długości obu tras
-        _,_,_,currentBestLen = self.makeSchedule(currentBestPermutation, path)
-        _,_,_,newLen = self.makeSchedule(newPermutation, path)
-        # jesli wylosowane rozwiązanie jest lepsze od aktualnego,
-        # zaktualizuj aktualne
-        if newLen <= currentBestLen:
-            # zawsze będzie większe od zakresu [0, 1] -> akcpetujemy wynik jako lepszy
-            return 2
+    # def Power(self, currentBestPermutation, newPermutation, temperature, path):
+    #     # obliczenie długości obu tras
+    #     _,_,_,currentBestLen = self.makeSchedule(currentBestPermutation, path)
+    #     _,_,_,newLen = self.makeSchedule(newPermutation, path)
+    #     # jesli wylosowane rozwiązanie jest lepsze od aktualnego,
+    #     # zaktualizuj aktualne
+    #     # if newLen <= currentBestLen:
+    #     #     # zawsze będzie większe od zakresu [0, 1] -> akcpetujemy wynik jako lepszy
+    #     #     return 2
+    #     # obliczenie różnicy spoznien pomiędzy permutacjami
+    #     #difference = currentBestLen - newLen
+    #     delta = newLen - currentBestLen
+    #     if delta < 0:
+    #         return 2
+    #     else:
+    #         probability = math.exp(-delta/temperature)
+    #     # obliczenie prawdopodobieństwa dla akceptacji
+    #     # wraz ze wzrostem różnicy odległości ono maleje,
+    #     # jednakowo dla temperatury - im mniejsza tym mniejsze prawd.
+    #     #propabilityOfAcceptance = 1 / difference * temperature
+    #     #propabilityOfAcceptance = math.exp(difference / temperature)
+    #     # print(propabilityOfAcceptance)
+    #
+    #     return probability
 
-        # obliczenie różnicy spoznien pomiędzy permutacjami
-        #difference = currentBestLen - newLen
-        difference = np.abs(currentBestLen - newLen)
-        # obliczenie prawdopodobieństwa dla akceptacji
-        # wraz ze wzrostem różnicy odległości ono maleje,
-        # jednakowo dla temperatury - im mniejsza tym mniejsze prawd.
-        propabilityOfAcceptance = 1 / difference * temperature
-        # print(propabilityOfAcceptance)
-
-        return propabilityOfAcceptance
-
-    def SA(self, maxIteration, kmax, path, pathWynik):
+    def SA(self, maxIteration, tmax, alpha, path, pathWynik):
         start1 = time.time()
-        for k in range(maxIteration):
-            start_interation = time.time()
-            # obliczamy aktualną temperaturę
-            if k <= kmax:
-                temp = 1 - (k + 1) / kmax
-            else:
-                temp = 1 / kmax
-
-            # szukamy losowo krawędzi do stworzenia rozwiązania
-            i = np.random.randint(1, self.n)
-            j = np.random.randint(1, self.n)
-
-            # generujemy te rozwiązanie
-            newTour = self.swap(self.firstPermutation, i, j)
-
-            # sprawdzamy, czy spełnia warunki przyjęcia
-            #randomProbability = np.random.rand()
-            random_value = random.uniform(0.8,0.99)
-            probabilityOfAcceptance = random_value * temp
-
-            if self.Power(self.firstPermutation, newTour, temp, path) >= probabilityOfAcceptance:
-                self.firstPermutation = newTour
-            end_iteration = time.time()
-            durationOfIteration = end_iteration - start_interation
-            #print("Czas trwania iteracji wynosi: ", durationOfIteration)
-
+        temp = tmax
+        tmin = 1 / tmax
+        while(temp > tmin):
+            for k in range(maxIteration):
+                start_interation = time.time()
+                # szukamy losowo krawędzi do stworzenia rozwiązania
+                i = np.random.randint(1, self.n)
+                j = np.random.randint(1, self.n)
+                # generujemy te rozwiązanie
+                newPermutation = self.swap(self.firstPermutation, i, j)
+                # sprawdzamy, czy spełnia warunki przyjęcia
+                _, _, _, currentBestLen = self.makeSchedule(self.firstPermutation, path)
+                _, _, _, newLen = self.makeSchedule(newPermutation, path)
+                delta = newLen - currentBestLen
+                probabilityOfAcceptance = random.uniform(0, 1)
+                if delta < 0:
+                    self.firstPermutation = newPermutation
+                else:
+                    probability = math.exp(-delta / temp)
+                    if probability >= probabilityOfAcceptance:
+                        self.firstPermutation = newPermutation
+                # if self.Power(self.firstPermutation, newPermutation, temp, path) >= probabilityOfAcceptance:
+                #     self.firstPermutation = newPermutation
+                end_iteration = time.time()
+                durationOfIteration = end_iteration - start_interation
+                #print("Czas trwania iteracji wynosi: ", durationOfIteration)
+            temp *= alpha
         end1 = time.time()
         durationSA = end1 - start1
 

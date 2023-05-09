@@ -7,7 +7,7 @@ import TabuSearch
 import SA
 
 # ścieżki do plików testowych
-pathOrder = "daneTestowe\\dane50_4.csv"
+pathOrder = "daneTestowe\\dane100_3.csv"
 pathZasoby = "Dane\\zasoby.csv"
 pathData = "Dane\\dane_sparsowane.txt"
 pathWynik = "Wyniki\\wyniki_" + pathOrder[-12:-4] + ".txt"
@@ -28,25 +28,26 @@ SA_start = time.time()
 symulowane = SA.SA(pathData)
 symulowane.createFirstPermutation(pathData)
 # określenie max liczby interacji dla SA
-maxIterationNumber = 10**5
+maxIterationNumber = 10**2
 # określenie max temperatury dla SA
-maxTemperature = 45
-symulowane.SA(maxIterationNumber, maxTemperature,pathData,pathWynikSA)
+maxTemperature = 1000
+alpha = 0.98
+symulowane.SA(maxIterationNumber, maxTemperature, alpha, pathData,pathWynikSA)
 SA_end = time.time()
 duration_SA = SA_end - SA_start
 print("Czas trwania SA: ", round(duration_SA,3), "[s]")
 
 ##Dane do algorytmu Tabu Search
 # lengthOfTabu = 7
-# option = "swap"
+# option = "insert"
 # iterationNumber = 100
 # cycleNumberMax = 5
 # isReactiveTabu = False
 # reactiveInterval = 50
-#
+
 # tabu_start = time.time()
 # tabu = TabuSearch.TabuSearch(pathData)
-# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,pathData, pathWynikTS)
+# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval, pathData, pathWynikTS)
 # tabu_end = time.time()
 # duration_tabu = tabu_end - tabu_start
 # print("-------------------")
