@@ -32,6 +32,7 @@ class SA(ReadData):
     def SA(self, maxIteration, tmax, tmin, alpha, path, pathWynik):
         start1 = time.time()
         temp = tmax
+        suma = 0
         while(temp > tmin):
             start2 = time.time()
             for k in range(maxIteration):
@@ -54,12 +55,15 @@ class SA(ReadData):
                         self.firstPermutation = newPermutation
                 end_iteration = time.time()
                 durationOfIteration = end_iteration - start_interation
+                suma += durationOfIteration
                 #print("Czas trwania iteracji wynosi: ", durationOfIteration)
             end2 = time.time()
             #print("Czas while: ", end2-start2)
             temp *= alpha
         end1 = time.time()
         durationSA = end1 - start1
+        srednia = suma/maxIteration
+        print("Średnia wartość iteracji: ", srednia)
 
         u,Sj,Cj,suma_spoznien = self.makeSchedule(self.firstPermutation, path)
         print("Suma spóźnień: ", suma_spoznien)
@@ -69,8 +73,11 @@ class SA(ReadData):
                 file.write(str(Cj[i]) +" : ")
                 file.write(str(u[i]) + "\n")
             file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
-            file.write('Czas trwania iteracji wynosi: ' + str(durationOfIteration) + " [s]" + '\n')
+            #file.write('Czas trwania iteracji wynosi: ' + str(durationOfIteration) + " [s]" + '\n')
             file.write('Czas trwania algorytmu: ' + str(round(durationSA, 3)) + " [s]" + '\n')
+            file.write('Sredni czas trwania iteracji: ' + str(srednia) + '\n')
+            file.write('Maksymalna temperatura: ' + str(tmax) + '\n')
+            file.write('Ilosc iteracji: ' + str(maxIteration) + '\n')
         # print(self.tour.astype(int))
         #print("Suma spóźnień: ", (self.wykonaj_algorytm(self.tour,path)))
 
