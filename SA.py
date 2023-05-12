@@ -10,6 +10,8 @@ class SA(ReadData):
     firstPermutation = np.zeros(3, dtype=int)
     n = 0
     changesOccured = True
+    durationOfIteration = 0
+    durationSA = 0
     # def __init__(self):
     #     pass
 
@@ -29,35 +31,9 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    # def Power(self, currentBestPermutation, newPermutation, temperature, path):
-    #     # obliczenie długości obu tras
-    #     _,_,_,currentBestLen = self.makeSchedule(currentBestPermutation, path)
-    #     _,_,_,newLen = self.makeSchedule(newPermutation, path)
-    #     # jesli wylosowane rozwiązanie jest lepsze od aktualnego,
-    #     # zaktualizuj aktualne
-    #     # if newLen <= currentBestLen:
-    #     #     # zawsze będzie większe od zakresu [0, 1] -> akcpetujemy wynik jako lepszy
-    #     #     return 2
-    #     # obliczenie różnicy spoznien pomiędzy permutacjami
-    #     #difference = currentBestLen - newLen
-    #     delta = newLen - currentBestLen
-    #     if delta < 0:
-    #         return 2
-    #     else:
-    #         probability = math.exp(-delta/temperature)
-    #     # obliczenie prawdopodobieństwa dla akceptacji
-    #     # wraz ze wzrostem różnicy odległości ono maleje,
-    #     # jednakowo dla temperatury - im mniejsza tym mniejsze prawd.
-    #     #propabilityOfAcceptance = 1 / difference * temperature
-    #     #propabilityOfAcceptance = math.exp(difference / temperature)
-    #     # print(propabilityOfAcceptance)
-    #
-    #     return probability
-
-    def SA(self, maxIteration, tmax, alpha, path, pathWynik):
+    def SA(self, maxIteration, tmax, tmin, alpha, path):
         start1 = time.time()
         temp = tmax
-        tmin = 1 / tmax
         while(temp > tmin):
             for k in range(maxIteration):
                 start_interation = time.time()
@@ -67,8 +43,8 @@ class SA(ReadData):
                 # generujemy te rozwiązanie
                 newPermutation = self.swap(self.firstPermutation, i, j)
                 # sprawdzamy, czy spełnia warunki przyjęcia
-                _, _, _, currentBestLen = self.makeSchedule(self.firstPermutation, path)
-                _, _, _, newLen = self.makeSchedule(newPermutation, path)
+                _, _, _, _, currentBestLen = self.makeSchedule(self.firstPermutation, path)
+                _, _, _, _, newLen = self.makeSchedule(newPermutation, path)
                 delta = newLen - currentBestLen
                 probabilityOfAcceptance = random.uniform(0, 1)
                 if delta < 0:
@@ -80,22 +56,41 @@ class SA(ReadData):
                 # if self.Power(self.firstPermutation, newPermutation, temp, path) >= probabilityOfAcceptance:
                 #     self.firstPermutation = newPermutation
                 end_iteration = time.time()
-                durationOfIteration = end_iteration - start_interation
+                self.durationOfIteration = end_iteration - start_interation
                 #print("Czas trwania iteracji wynosi: ", durationOfIteration)
             temp *= alpha
         end1 = time.time()
-        durationSA = end1 - start1
+        self.durationSA = end1 - start1
+        return self.firstPermutation
 
-        u,Sj,Cj,suma_spoznien = self.makeSchedule(self.firstPermutation, path)
+    def result(self,path,pathWynik):
+        u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(self.firstPermutation, path)
+        print("Obecnie najlepsza permutacja: ", self.firstPermutation)
         print("Suma spóźnień: ", suma_spoznien)
+        print("Lista spożnien: ", Tj)
+        #for i in Tj:
+        maxDelay = max(Tj)
+        print("Usunięta wartość: ", maxDelay)
+        index = Tj.index(maxDelay)
+        print("Usunięty index: ", index)
+        newPermutation = np.delete(self.firstPermutation, index)
+        print("Permutacja po zmianie: ", newPermutation)
+        #u1,Sj1,Cj1,Tj1, sumDelay = self.makeSchedule(newPermutation,path)
+        #print("Suma spoznien: ", sumDelay)
+
+
+        # for i in Tj:
+        #     if Tj[i] != 0:
+        #         self.firstPermutation[i]
+        #self.firstPermutation = self.firstPermutation.remove
         with open(pathWynik,"w") as file:
             for i in range(len(Sj)):
                 file.write(str(Sj[i]) +" ")
                 file.write(str(Cj[i]) +" : ")
                 file.write(str(u[i]) + "\n")
             file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
-            file.write('Czas trwania iteracji wynosi: ' + str(durationOfIteration) + " [s]" + '\n')
-            file.write('Czas trwania algorytmu: ' + str(round(durationSA, 3)) + " [s]" + '\n')
+            file.write('Czas trwania iteracji wynosi: ' + str(self.durationOfIteration) + " [s]" + '\n')
+            file.write('Czas trwania algorytmu: ' + str(round(self.durationSA, 3)) + " [s]" + '\n')
         # print(self.tour.astype(int))
         #print("Suma spóźnień: ", (self.wykonaj_algorytm(self.tour,path)))
 

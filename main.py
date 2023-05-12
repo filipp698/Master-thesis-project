@@ -27,12 +27,13 @@ data.parseTL(pathOrder, pathZasoby, pathData)
 SA_start = time.time()
 symulowane = SA.SA(pathData)
 symulowane.createFirstPermutation(pathData)
-# określenie parametrów dla SA
+# określenie paramterów dla SA
 maxIterationNumber = 25
 maxTemperature = 1000
-minTemperature = 0.1
 alpha = 0.98
-symulowane.SA(maxIterationNumber, maxTemperature, minTemperature, alpha, pathData,pathWynikSA)
+minTemperature = 0.1
+symulowane.SA(maxIterationNumber, maxTemperature, minTemperature, alpha, pathData)
+symulowane.result(pathData,pathWynikSA)
 SA_end = time.time()
 duration_SA = SA_end - SA_start
 print("Czas trwania SA: ", round(duration_SA,3), "[s]")
@@ -44,10 +45,10 @@ print("Czas trwania SA: ", round(duration_SA,3), "[s]")
 # cycleNumberMax = 5
 # isReactiveTabu = False
 # reactiveInterval = 50
-#
+
 # tabu_start = time.time()
 # tabu = TabuSearch.TabuSearch(pathData)
-# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,pathData, pathWynikTS)
+# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval, pathData, pathWynikTS)
 # tabu_end = time.time()
 # duration_tabu = tabu_end - tabu_start
 # print("-------------------")
