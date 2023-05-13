@@ -1,7 +1,7 @@
 import random
 import time
 import math
-
+import csv
 import numpy as np
 from ReadData import ReadData
 
@@ -10,6 +10,9 @@ class SA(ReadData):
     firstPermutation = np.zeros(3, dtype=int)
     n = 0
     changesOccured = True
+    newPermutation = []
+    bestDelay = 9999
+    bestPermutation = []
     # def __init__(self):
     #     pass
 
@@ -29,57 +32,125 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    def SA(self, maxIteration, tmax, tmin, alpha, path, pathWynik):
+    def SA(self, initialPermutation, maxIteration, tmax, tmin, alpha, path):
         start1 = time.time()
         temp = tmax
-        suma = 0
-        while(temp > tmin):
-            start2 = time.time()
+        currentPermutation = initialPermutation
+        _, _, _, _, currentDelay = self.makeSchedule(currentPermutation, path)
+        self.bestPermutation = currentPermutation
+        _, _, _, _, self.bestDelay = self.makeSchedule(initialPermutation, path)
+        self.bestDelay = currentDelay
+
+        while (temp > tmin):
             for k in range(maxIteration):
                 start_interation = time.time()
                 # szukamy losowo krawędzi do stworzenia rozwiązania
                 i = np.random.randint(1, self.n)
                 j = np.random.randint(1, self.n)
                 # generujemy te rozwiązanie
-                newPermutation = self.swap(self.firstPermutation, i, j)
+                newPermutation = self.swap(currentPermutation, i, j)
                 # sprawdzamy, czy spełnia warunki przyjęcia
-                _, _, _, currentBestLen = self.makeSchedule(self.firstPermutation, path)
-                _, _, _, newLen = self.makeSchedule(newPermutation, path)
-                delta = newLen - currentBestLen
+                _, _, _, _, currentBestDelay = self.makeSchedule(currentPermutation, path)
+                _, _, _, _, newDelay = self.makeSchedule(newPermutation, path)
+                if newDelay < self.bestDelay:
+                    self.bestDelay = newDelay
+                    self.bestPermutation = newPermutation
+                delta = newDelay - currentBestDelay
                 probabilityOfAcceptance = random.uniform(0, 1)
                 if delta <= 0:
-                    self.firstPermutation = newPermutation
+                    currentPermutation = newPermutation
                 else:
                     probability = math.exp(-delta / temp)
                     if probability >= probabilityOfAcceptance:
-                        self.firstPermutation = newPermutation
+                        currentPermutation = newPermutation
                 end_iteration = time.time()
-                durationOfIteration = end_iteration - start_interation
-                suma += durationOfIteration
-                #print("Czas trwania iteracji wynosi: ", durationOfIteration)
-            end2 = time.time()
-            #print("Czas while: ", end2-start2)
+                self.durationOfIteration = end_iteration - start_interation
+                # print("Czas trwania iteracji wynosi: ", durationOfIteration)
             temp *= alpha
         end1 = time.time()
-        durationSA = end1 - start1
-        srednia = suma/maxIteration
-        print("Średnia wartość iteracji: ", srednia)
+        self.durationSA = end1 - start1
+        u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
+        print("Suma spoznien: ", suma_spoznien)
+        print("Najlepsza premutacja: ", self.bestPermutation)
+        # if suma_spoznien !=0:
+        #     newPermutation = self.removeTask(self.firstPermutation,path)
+        #     _, _, _, _, suma_spoznien = self.makeSchedule(newPermutation, path)
+        # return self.firstPermutation
+    def SA2(self,permutation, maxIteration, tmax, tmin, alpha, path):
+        start1 = time.time()
+        temp = tmax
+        while (temp > tmin):
+            for k in range(maxIteration):
+                start_interation = time.time()
+                # szukamy losowo krawędzi do stworzenia rozwiązania
+                i = np.random.randint(1, self.n)
+                j = np.random.randint(1, self.n)
+                # generujemy te rozwiązanie
+                newPermutation = self.swap(permutation, i, j)
+                # sprawdzamy, czy spełnia warunki przyjęcia
+                _, _, _, _, currentBestLen = self.makeSchedule(permutation, path)
+                _, _, _, _, newLen = self.makeSchedule(newPermutation, path)
+                delta = newLen - currentBestLen
+                probabilityOfAcceptance = random.uniform(0, 1)
+                if delta < 0:
+                    permutation = newPermutation
+                else:
+                    probability = math.exp(-delta / temp)
+                    if probability >= probabilityOfAcceptance:
+                        permutation = newPermutation
+                # if self.Power(self.firstPermutation, newPermutation, temp, path) >= probabilityOfAcceptance:
+                #     self.firstPermutation = newPermutation
+                end_iteration = time.time()
+                self.durationOfIteration = end_iteration - start_interation
+                # print("Czas trwania iteracji wynosi: ", durationOfIteration)
+            temp *= alpha
+        end1 = time.time()
+        self.durationSA = end1 - start1
+        u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(permutation, path)
+        print("Suma spoznien: ", suma_spoznien)
+        return permutation
 
-        u,Sj,Cj,suma_spoznien = self.makeSchedule(self.firstPermutation, path)
+    def removeTask(self, currentPermutation, path):
+        u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(currentPermutation, path)
+        print("Obecnie najlepsza permutacja: ", currentPermutation)
         print("Suma spóźnień: ", suma_spoznien)
-        with open(pathWynik,"w") as file:
-            for i in range(len(Sj)):
-                file.write(str(Sj[i]) +" ")
-                file.write(str(Cj[i]) +" : ")
-                file.write(str(u[i]) + "\n")
-            file.write('Suma spoznien wynosi: ' + str(suma_spoznien) + '\n')
-            #file.write('Czas trwania iteracji wynosi: ' + str(durationOfIteration) + " [s]" + '\n')
-            file.write('Czas trwania algorytmu: ' + str(round(durationSA, 3)) + " [s]" + '\n')
-            file.write('Sredni czas trwania iteracji: ' + str(srednia) + '\n')
-            file.write('Maksymalna temperatura: ' + str(tmax) + '\n')
-            file.write('Ilosc iteracji: ' + str(maxIteration) + '\n')
-        # print(self.tour.astype(int))
-        #print("Suma spóźnień: ", (self.wykonaj_algorytm(self.tour,path)))
+        print("Lista spożnien: ", Tj)
+        maxDelay = max(Tj)
+        print("Usunięta wartość: ", maxDelay)
+        index = Tj.index(maxDelay)
+        #del u[index]
+        #del Sj[index]
+        #del Cj[index]
+        print("Usunięty index: ", index)
+        newPermutation = np.delete(currentPermutation, index)
+        print("Permutacja po zmianie: ", newPermutation)
+        # filename = "daneAlg\\dane25_4.csv"
+        # with open(filename, 'r') as file:
+        #     rows = list(csv.reader(file))
+        #     del rows[index]
+        # with open(filename, 'w',newline='') as file:
+        #     writer = csv.writer(file)
+        #     writer.writerows(rows)
+        u1, Sj1, Cj1, Tj1, sumDelay = self.makeSchedule(newPermutation,path)
+        print("Suma spoznien: ", sumDelay)
+        return newPermutation
+
+        # for i in Tj:
+        #     if Tj[i] != 0:
+        #         self.firstPermutation[i]
+        # self.firstPermutation = self.firstPermutation.remove
+    # def result(self,pathWynik):
+    #     with open(pathWynik, "w") as file:
+    #         for i in range(len(Sj1)):
+    #             file.write("Zad " + str(self.newPermutation[i]) + ": ")
+    #             file.write(str(Sj1[i]) + " ")
+    #             file.write(str(Cj1[i]) + " : ")
+    #             file.write(str(u1[i]) + "\n")
+    #         file.write('Suma spoznien wynosi: ' + str(sumDelay) + '\n')
+    #         file.write('Czas trwania iteracji wynosi: ' + str(self.durationOfIteration) + " [s]" + '\n')
+    #         file.write('Czas trwania algorytmu: ' + str(round(self.durationSA, 3)) + " [s]" + '\n')
+    #     print(self.tour.astype(int))
+    #     print("Suma spóźnień: ", (self.wykonaj_algorytm(self.tour,path)))
 
     def generateRandomPermutation(self, permutation):
         permutation = np.random.permutation(permutation)
