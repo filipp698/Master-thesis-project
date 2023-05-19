@@ -1,3 +1,4 @@
+import numpy as np
 class ReadData:
     u = [] #lista urządzeń
     Sj = [] #momenty rozpoczęcia
@@ -46,6 +47,43 @@ class ReadData:
             R.append(0)
         for i in range(len(permutacja)):
             j = nr_zam[i]  # możliwe permutacje zamówień
+            # pierwszy etap
+            for t in range(1, (z[j - 1] + 1)):
+                u[j - 1][t - 1] = min(zasobyTL[j - 1][t - 1][1:], key=lambda z: R[z])  # lista list
+            # drugi etap
+            S = R[u[j - 1][0]]  # moment rozpoczęcia wynosi moment zwolnienia danej TL
+            Sj.append(R[u[j - 1][0]])
+            for t in range(2, (z[j - 1] + 1)):  # indeksowanie się po radiach
+                if S < R[u[j - 1][
+                    t - 1]]:  # jeśli mooment rozpoczęcia będzie mniejszy niż dostępne radio to zmieniamy go na wartość dostępności RU
+                    S = R[u[j - 1][t - 1]]
+            # trzeci etap
+            C = S + p[j - 1]  # moment zakończenia
+            Cj.append(S + p[j - 1])
+            T = C - d[j - 1]
+            if T > 0:
+                Tj.append(C - d[j - 1])
+            elif T <= 0:
+                Tj.append(0)
+            # czwarty etap
+            for t in range(1, (z[j - 1] + 1)):
+                R[u[j - 1][t - 1]] = C
+        suma_kar = sum(Tj)
+        return u,Sj,Cj,Tj,suma_kar
+
+    def makeSchedule2(self, permutacja, nr_zad, path):
+        tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d, _ = self.readData(path)
+        nr_zam = permutacja
+        R = []  # moment zwolnienia zasobu
+        Sj = []
+        Cj = []
+        Tj = []
+        u = [[0 for i in range(z[j])] for j in range(iloscZamowien)]
+        for i in range(iloscZasobow + 1):
+            R.append(0)
+        for i in range(len(permutacja)):
+            j = nr_zam[i]  # możliwe permutacje zamówień
+            d[nr_zad] = np.inf
             # pierwszy etap
             for t in range(1, (z[j - 1] + 1)):
                 u[j - 1][t - 1] = min(zasobyTL[j - 1][t - 1][1:], key=lambda z: R[z])  # lista list

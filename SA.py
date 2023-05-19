@@ -13,6 +13,7 @@ class SA(ReadData):
     newPermutation = []
     bestDelay = 9999
     bestPermutation = []
+    delaySA = 9999
     # def __init__(self):
     #     pass
 
@@ -70,14 +71,44 @@ class SA(ReadData):
         end1 = time.time()
         self.durationSA = end1 - start1
         u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
+        bestPremutation = self.bestPermutation
         print("Suma spoznien: ", suma_spoznien)
         print("Najlepsza premutacja: ", self.bestPermutation)
-        # if suma_spoznien !=0:
-        #     newPermutation = self.removeTask(self.firstPermutation,path)
-        #     _, _, _, _, suma_spoznien = self.makeSchedule(newPermutation, path)
-        # return self.firstPermutation
-    def SA2(self,permutation, maxIteration, tmax, tmin, alpha, path):
-        start1 = time.time()
+        while self.delaySA != 0:
+            permutationSA = self.findLongestTasks(bestPremutation, path)
+            SA2 = self.secondSA(permutationSA, maxIteration, tmax, tmin, alpha, path)
+            permutationSA2 = self.findLongestTasks(SA2,path)
+            SA3 = self.secondSA(permutationSA2, maxIteration, tmax, tmin, alpha, path)
+            permutationSA3 = self.findLongestTasks(SA3, path)
+            SA4 = self.secondSA(permutationSA3, maxIteration, tmax, tmin, alpha, path)
+            permutationSA4 = self.findLongestTasks(SA4, path)
+            SA5 = self.secondSA(permutationSA4, maxIteration, tmax, tmin, alpha, path)
+            print("Permutacja ostateczna: ", SA5)
+            print("Dlugosc ostatecznej premutacji: ", len(SA5))
+            if self.bestDelay == 0:
+                print("Spoznienie rowne 0")
+
+        return self.bestPermutation
+    def findLongestTasks(self, permutation, path):
+        lista_spoznien = []
+        for i in range(0,len(permutation)):
+            _, _, _, _, spoznienia = self.makeSchedule2(permutation, i, path)
+            lista_spoznien.append(spoznienia)
+        minDelay = min(lista_spoznien)  # wartość spoźnienia, które daje najwieksze efekty
+        index = lista_spoznien.index(minDelay)
+        removedElement = permutation[index]
+        newPermutation = np.delete(permutation, index)
+        _, _, _, _, delay = self.makeSchedule(newPermutation, path)
+        print("Lista spoznien dla danych zadan: ", lista_spoznien)
+        print("Index wyrzuconej wartości: ", index)
+        print("Usuniete zadanie z permutacji: ", removedElement)
+        print("Nowa permutacja: ", newPermutation)
+        print("Spoznienie w nowej permutacji: ", delay)
+        return newPermutation
+
+    def secondSA(self, permutation, maxIteration, tmax, tmin, alpha, path):
+
+        #permutation = self.removeTask(self.bestPermutation, path)
         temp = tmax
         while (temp > tmin):
             for k in range(maxIteration):
@@ -104,25 +135,29 @@ class SA(ReadData):
                 self.durationOfIteration = end_iteration - start_interation
                 # print("Czas trwania iteracji wynosi: ", durationOfIteration)
             temp *= alpha
-        end1 = time.time()
-        self.durationSA = end1 - start1
-        u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(permutation, path)
-        print("Suma spoznien: ", suma_spoznien)
+        u, Sj, Cj, Tj, self.delaySA = self.makeSchedule(permutation, path)
+        print("Suma spoznien dla nowej permutacji po SA: ", self.delaySA)
+
         return permutation
 
     def removeTask(self, currentPermutation, path):
         u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(currentPermutation, path)
-        print("Obecnie najlepsza permutacja: ", currentPermutation)
-        print("Suma spóźnień: ", suma_spoznien)
-        print("Lista spożnien: ", Tj)
-        maxDelay = max(Tj)
-        print("Usunięta wartość: ", maxDelay)
-        index = Tj.index(maxDelay)
-        #del u[index]
-        #del Sj[index]
-        #del Cj[index]
-        print("Usunięty index: ", index)
-        newPermutation = np.delete(currentPermutation, index)
+        print("Czasy zakończeń: ", Cj)
+        print("Spoznienia poszczegolnych zadań: ", Sj)
+        for i in range(len(currentPermutation)):
+            Cj[i] = np.inf
+
+        #print("Obecnie najlepsza permutacja: ", currentPermutation)
+        #print("Suma spóźnień przed: ", suma_spoznien)
+        #print("Lista spożnien: ", Tj)
+        #maxDelay = max(Tj)
+        #print("Usunięta wartość: ", maxDelay)
+        #index = Tj.index(maxDelay)
+        #index = Tj[2]
+        #print("Usunięta wartość: ", index)
+        #print("Usunięty zadanie nr: ", index)
+        #newPermutation = del currentPermutation[0]
+        newPermutation = np.delete(currentPermutation, currentPermutation[0])
         print("Permutacja po zmianie: ", newPermutation)
         # filename = "daneAlg\\dane25_4.csv"
         # with open(filename, 'r') as file:
@@ -131,8 +166,8 @@ class SA(ReadData):
         # with open(filename, 'w',newline='') as file:
         #     writer = csv.writer(file)
         #     writer.writerows(rows)
-        u1, Sj1, Cj1, Tj1, sumDelay = self.makeSchedule(newPermutation,path)
-        print("Suma spoznien: ", sumDelay)
+        #u1, Sj1, Cj1, Tj1, sumDelay = self.makeSchedule(newPermutation,path)
+        #print("Suma spoznien po zmianie permutacji: ", sumDelay)
         return newPermutation
 
         # for i in Tj:

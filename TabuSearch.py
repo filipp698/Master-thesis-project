@@ -23,7 +23,7 @@ class TabuSearch(ReadData):
 
     def execute(self, startPermutation, lenghtOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,path,pathWynik):
         start1 = time.time()
-        _,_,_,Tj = self.makeSchedule(self.firstPermutation, path)
+        _,_,_,_,Tj = self.makeSchedule(self.firstPermutation, path)
         isCycleNumberMaxReached = False
         intervalIterator = 0
         permutation = startPermutation
@@ -39,7 +39,7 @@ class TabuSearch(ReadData):
             neighborhood = self.generateNeighborhood(permutation, option)
             for neighborPermutation in neighborhood:
                 isInTabu, index = tabuList.contains(neighborPermutation)
-                _,_,_,delay = self.makeSchedule(neighborPermutation, path) #kalkuluować sumę spóźnień dla danej permutacji
+                _,_,_,_,delay = self.makeSchedule(neighborPermutation, path) #kalkuluować sumę spóźnień dla danej permutacji
                 if delay < localBestDelay:
                     if isInTabu:
                         if self.bestDelay > delay:
@@ -47,7 +47,7 @@ class TabuSearch(ReadData):
                             localBestPermutation = neighborPermutation
                         else:
                             pass
-                            # neighborhood.remove(index)
+                            #tabuList.remove(index)
                     else:
                         localBestDelay = delay
                         localBestPermutation = neighborPermutation
@@ -90,7 +90,7 @@ class TabuSearch(ReadData):
             suma += durationOfIteration
             #print("Średni czas trwania iteracji: ", round(averageIteration, 3), "[s]")
             #zapis wyników
-            u, Sj, Cj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
+            u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
             with open(pathWynik + option + ".txt", "w") as file:
                 for i in range(len(Sj)):
                     file.write(str(Sj[i]) + " ")
