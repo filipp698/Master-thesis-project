@@ -72,21 +72,32 @@ class SA(ReadData):
         self.durationSA = end1 - start1
         u, Sj, Cj, Tj, suma_spoznien = self.makeSchedule(self.bestPermutation, path)
         bestPremutation = self.bestPermutation
-        print("Suma spoznien: ", suma_spoznien)
-        print("Najlepsza premutacja: ", self.bestPermutation)
+        ammountOfIteration = 0
+        print("Suma spoznien na początku: ", suma_spoznien)
+        print("Najlepsza permutacja: ", self.bestPermutation)
+        print("Lista spoznionych zadań", Tj)
+        ## Wyrzucanie każdego z zadań pojedynczo
+        # while self.delaySA != 0:
+        #     permutationSA = self.findLongestTasks(bestPremutation, path)
+        #     SA2 = self.secondSA(permutationSA, maxIteration, tmax, tmin, alpha, path)
+        #     bestPremutation = SA2
+        #     ammountOfIteration += 1
+        #     if self.delaySA == 0:
+        #         print("Spoznienie rowne jest 0")
+        # print("Permutacja ostateczna: ", SA2)
+        # print("Dlugosc ostatecznej premutacji: ", len(SA2))
+        # print("Ilosc iteracji petli while: ", ammountOfIteration)
+        ## Wyrzucenie zadań przeterminowanych
         while self.delaySA != 0:
-            permutationSA = self.findLongestTasks(bestPremutation, path)
+            permutationSA = self.findLongestDelayedTask(bestPremutation, path)
             SA2 = self.secondSA(permutationSA, maxIteration, tmax, tmin, alpha, path)
-            permutationSA2 = self.findLongestTasks(SA2,path)
-            SA3 = self.secondSA(permutationSA2, maxIteration, tmax, tmin, alpha, path)
-            permutationSA3 = self.findLongestTasks(SA3, path)
-            SA4 = self.secondSA(permutationSA3, maxIteration, tmax, tmin, alpha, path)
-            permutationSA4 = self.findLongestTasks(SA4, path)
-            SA5 = self.secondSA(permutationSA4, maxIteration, tmax, tmin, alpha, path)
-            print("Permutacja ostateczna: ", SA5)
-            print("Dlugosc ostatecznej premutacji: ", len(SA5))
-            if self.bestDelay == 0:
-                print("Spoznienie rowne 0")
+            bestPremutation = SA2
+            ammountOfIteration += 1
+            if self.delaySA == 0:
+                print("Spoznienie rowne jest 0")
+        print("Permutacja ostateczna: ", SA2)
+        print("Dlugosc ostatecznej premutacji: ", len(SA2))
+        print("Ilosc iteracji petli while: ", ammountOfIteration)
 
         return self.bestPermutation
     def findLongestTasks(self, permutation, path):
@@ -96,6 +107,24 @@ class SA(ReadData):
             lista_spoznien.append(spoznienia)
         minDelay = min(lista_spoznien)  # wartość spoźnienia, które daje najwieksze efekty
         index = lista_spoznien.index(minDelay)
+        removedElement = permutation[index]
+        newPermutation = np.delete(permutation, index)
+        _, _, _, _, delay = self.makeSchedule(newPermutation, path)
+        print("Lista spoznien dla danych zadan: ", lista_spoznien)
+        print("Index wyrzuconej wartości: ", index)
+        print("Usuniete zadanie z permutacji: ", removedElement)
+        print("Nowa permutacja: ", newPermutation)
+        print("Spoznienie w nowej permutacji: ", delay)
+        return newPermutation
+    def findLongestDelayedTask(self, permutation, path):
+        _,_,_,lista_spoznien,delay = self.makeSchedule(permutation,path)
+        delayedTask = 0
+        for task in lista_spoznien:
+            if task != 0:
+                delayedTask = task
+                break
+        #print(delayedTask)
+        index = lista_spoznien.index(delayedTask)
         removedElement = permutation[index]
         newPermutation = np.delete(permutation, index)
         _, _, _, _, delay = self.makeSchedule(newPermutation, path)
