@@ -14,6 +14,8 @@ pathWynik = "Wyniki\\wyniki_" + pathOrder[-12:-4] + ".txt"
 pathWynikTS = "Wyniki\\wyniki_TS_" + pathOrder[-12:-4] + "_"
 pathWynikSA = "Wyniki\\wyniki_SA_" + pathOrder[-12:-4] + ".txt"
 
+
+
 #inicjalizacja obiektu i wczytanie danych
 data = Parse.Parse()
 data.parseTL(pathOrder, pathZasoby, pathData)
@@ -32,13 +34,13 @@ maxIterationNumber = 25
 maxTemperature = 1000
 minTemperature = 0.1
 alpha = 0.98
-symulowane.SA(symulowane.firstPermutation, maxIterationNumber, maxTemperature, minTemperature, alpha, pathData)
-#symulowane.removeTask(symulowane.bestPermutation,pathData)
-#symulowane.SA2(maxIterationNumber, maxTemperature, minTemperature, alpha, pathData)
-# #symulowane.removeTask(pathData)
-# SA_end = time.time()
-# duration_SA = SA_end - SA_start
-# print("Czas trwania SA: ", round(duration_SA,3), "[s]")
+option = 2
+pathWynikSA2 = "Wyniki\\wyniki_SA_" + pathOrder[-12:-4] + "_option_" + str(option) + ".txt"
+symulowane.SA(symulowane.firstPermutation, maxIterationNumber, maxTemperature, minTemperature, alpha, pathData, option)
+SA_end = time.time()
+duration_SA = SA_end - SA_start
+symulowane.result(pathData,pathWynikSA2)
+print("Czas trwania SA: ", round(duration_SA,3), "[s]")
 
 #Dane do algorytmu Tabu Search
 # lengthOfTabu = 7

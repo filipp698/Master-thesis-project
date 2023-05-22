@@ -71,7 +71,7 @@ class ReadData:
         suma_kar = sum(Tj)
         return u,Sj,Cj,Tj,suma_kar
 
-    def makeSchedule2(self, permutacja, nr_zad, path):
+    def makeScheduleInfinity(self, permutacja, nr_zad, path):
         tasks, iloscZamowien, iloscZasobow, zasobyTL, dataOrder, z, p, d, _ = self.readData(path)
         nr_zam = permutacja
         R = []  # moment zwolnienia zasobu
