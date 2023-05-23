@@ -56,7 +56,7 @@ class Parse:
                 addRU.append(bool(add5G[i]) if add5G[i][0] != '0' else 0)
                 suma = iloscNR[i] + iloscLTE[i] + addRU[i] + 1
                 iloscRU.append(suma)
-        print("Ilosc zasobow: ", len(kodZasobu)-1)
+        #print("Ilosc zasobow: ", len(kodZasobu)-1)
         print("Ilosc zamowien: ",len(nrZam))
         #slownik zawierający bandy TDD, które definiują TL6-8
         dictionaryTDD = {'n40': slownik['n40'], 'n41': slownik['n41'], 'n47': slownik['n47'], 'n77': slownik['n77'],

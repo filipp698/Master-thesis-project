@@ -14,6 +14,8 @@ pathWynik = "Wyniki\\wyniki_" + pathOrder[-12:-4] + ".txt"
 pathWynikTS = "Wyniki\\wyniki_TS_" + pathOrder[-12:-4] + "_"
 pathWynikSA = "Wyniki\\wyniki_SA_" + pathOrder[-12:-4] + ".txt"
 
+
+
 #inicjalizacja obiektu i wczytanie danych
 data = Parse.Parse()
 data.parseTL(pathOrder, pathZasoby, pathData)
@@ -27,28 +29,30 @@ data.parseTL(pathOrder, pathZasoby, pathData)
 SA_start = time.time()
 symulowane = SA.SA(pathData)
 symulowane.createFirstPermutation(pathData)
-# określenie paramterów dla SA
+# określenie parametrów dla SA
 maxIterationNumber = 25
 maxTemperature = 1000
-alpha = 0.98
 minTemperature = 0.1
-symulowane.SA(maxIterationNumber, maxTemperature, minTemperature, alpha, pathData)
-symulowane.result(pathData,pathWynikSA)
+alpha = 0.98
+option = 2
+pathWynikSA2 = "Wyniki\\wyniki_SA_" + pathOrder[-12:-4] + "_option_" + str(option) + ".txt"
+symulowane.SA(symulowane.firstPermutation, maxIterationNumber, maxTemperature, minTemperature, alpha, pathData, option)
 SA_end = time.time()
 duration_SA = SA_end - SA_start
+symulowane.result(pathData,pathWynikSA2)
 print("Czas trwania SA: ", round(duration_SA,3), "[s]")
 
-##Dane do algorytmu Tabu Search
+#Dane do algorytmu Tabu Search
 # lengthOfTabu = 7
 # option = "insert"
 # iterationNumber = 100
 # cycleNumberMax = 5
 # isReactiveTabu = False
 # reactiveInterval = 50
-
+#
 # tabu_start = time.time()
 # tabu = TabuSearch.TabuSearch(pathData)
-# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval, pathData, pathWynikTS)
+# tabu.execute(tabu.firstPermutation, lengthOfTabu, option, iterationNumber, cycleNumberMax, isReactiveTabu, reactiveInterval,pathData, pathWynikTS)
 # tabu_end = time.time()
 # duration_tabu = tabu_end - tabu_start
 # print("-------------------")
