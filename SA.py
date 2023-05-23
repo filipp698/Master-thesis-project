@@ -14,6 +14,9 @@ class SA(ReadData):
     bestDelay = 9999
     bestPermutation = []
     delaySA = 9999
+    bestSecondDelay = 9999
+    bestSecondPermutation = []
+
     # def __init__(self):
     #     pass
 
@@ -114,12 +117,12 @@ class SA(ReadData):
         index = lista_spoznien.index(minDelay)
         removedElement = permutation[index]
         newPermutation = np.delete(permutation, index)
-        _, _, _, _, delay = self.makeSchedule(newPermutation, path)
-        print("Lista spoznien dla danych zadan: ", lista_spoznien)
+        _, _, _, _, self.delaySA = self.makeSchedule(newPermutation, path)
+        #print("Lista spoznien dla danych zadan: ", lista_spoznien)
         #print("Index wyrzuconej wartości: ", index)
         #print("Usuniete zadanie z permutacji: ", removedElement)
         print("Nowa permutacja: ", newPermutation)
-        print("Spoznienie w nowej permutacji: ", delay)
+        print("Spoznienie w nowej permutacji: ", self.delaySA)
         return newPermutation
     def findLongestDelayedTask(self, permutation, path):
         _,_,_,lista_spoznien,delay = self.makeSchedule(permutation,path)
@@ -132,16 +135,19 @@ class SA(ReadData):
         index = lista_spoznien.index(delayedTask)
         removedElement = permutation[index]
         newPermutation = np.delete(permutation, index)
-        _, _, _, _, delay = self.makeSchedule(newPermutation, path)
-        print("Lista spoznien dla danych zadan: ", lista_spoznien)
-        #print("Index wyrzuconej wartości: ", index)
-        #print("Usuniete zadanie z permutacji: ", removedElement)
+        _, _, _, _, self.delaySA = self.makeSchedule(newPermutation, path)
+        print("Lista przeterminowanych zadan: ", lista_spoznien)
+        print("Index wyrzuconej wartości: ", index)
+        print("Usuniete zadanie z permutacji: ", removedElement)
         print("Nowa permutacja: ", newPermutation)
-        print("Spoznienie w nowej permutacji: ", delay)
+        print("Spoznienie w nowej permutacji: ", self.delaySA)
         return newPermutation
 
     def secondSA(self, permutation, maxIteration, tmax, tmin, alpha, path):
         temp = tmax
+        _, _, _, _, currentBestLen = self.makeSchedule(permutation, path)
+        self.bestSecondPermutation = permutation
+        self.bestSecondDelay = currentBestLen
         while (temp > tmin):
             for k in range(maxIteration):
                 start_interation = time.time()
@@ -153,6 +159,9 @@ class SA(ReadData):
                 # sprawdzamy, czy spełnia warunki przyjęcia
                 _, _, _, _, currentBestLen = self.makeSchedule(permutation, path)
                 _, _, _, _, newLen = self.makeSchedule(newPermutation, path)
+                if newLen < self.bestSecondDelay:
+                    self.bestSecondDelay = newLen
+                    self.bestSecondPermutation = newPermutation
                 delta = newLen - currentBestLen
                 probabilityOfAcceptance = random.uniform(0, 1)
                 if delta < 0:
@@ -161,25 +170,25 @@ class SA(ReadData):
                     probability = math.exp(-delta / temp)
                     if probability >= probabilityOfAcceptance:
                         permutation = newPermutation
-                # if self.Power(self.firstPermutation, newPermutation, temp, path) >= probabilityOfAcceptance:
-                #     self.firstPermutation = newPermutation
                 end_iteration = time.time()
                 self.durationOfIteration = end_iteration - start_interation
                 # print("Czas trwania iteracji wynosi: ", durationOfIteration)
             temp *= alpha
-        u, Sj, Cj, Tj, self.delaySA = self.makeSchedule(permutation, path)
+        _, _, _, _, self.delaySA = self.makeSchedule(self.bestSecondPermutation, path)
         print("Suma spoznien dla nowej permutacji po SA: ", self.delaySA)
 
-        return permutation
+        return self.bestSecondPermutation
 
     def result(self,path,pathWynik):
         u, Sj, Cj, Tj, delaySA = self.makeSchedule(self.bestPermutation, path)
+        #print("Lista urządzeń", u)
         with open(pathWynik, "w") as file:
             for i in range(len(Sj)):
                 file.write("Zad " + str(self.bestPermutation[i]) + ": ")
+                nr = int(self.bestPermutation[i])
                 file.write(str(Sj[i]) + " ")
                 file.write(str(Cj[i]) + " : ")
-                file.write(str(u[i]) + "\n")
+                file.write(str(u[nr-1]) + "\n")
             file.write('Suma spoznien wynosi: ' + str(delaySA) + '\n')
             file.write('Ilosc zadan zrealizowanych: ' + str(len(self.bestPermutation)) + '\n')
             file.write('Czas trwania iteracji wynosi: ' + str(self.durationOfIteration) + " [s]" + '\n')

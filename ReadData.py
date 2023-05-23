@@ -54,8 +54,7 @@ class ReadData:
             S = R[u[j - 1][0]]  # moment rozpoczęcia wynosi moment zwolnienia danej TL
             Sj.append(R[u[j - 1][0]])
             for t in range(2, (z[j - 1] + 1)):  # indeksowanie się po radiach
-                if S < R[u[j - 1][
-                    t - 1]]:  # jeśli mooment rozpoczęcia będzie mniejszy niż dostępne radio to zmieniamy go na wartość dostępności RU
+                if S < R[u[j - 1][t - 1]]:  # jeśli mooment rozpoczęcia będzie mniejszy niż dostępne radio to zmieniamy go na wartość dostępności RU
                     S = R[u[j - 1][t - 1]]
             # trzeci etap
             C = S + p[j - 1]  # moment zakończenia
