@@ -36,7 +36,7 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    def SA(self, initialPermutation, maxIteration, tmax, tmin, alpha, path, option):
+    def SA(self, initialPermutation, maxIteration, tmax, tmin, alpha, path, option, maxIter2):
         start1 = time.time()
         temp = tmax
         currentPermutation = initialPermutation
@@ -81,7 +81,7 @@ class SA(ReadData):
         if option == 1:
             while self.delaySA != 0:
                 permutationSA = self.findLongestTasks(bestPremutation, path)
-                SA2 = self.secondSA(permutationSA, maxIteration, tmax, tmin, alpha, path)
+                SA2 = self.secondSA(permutationSA, maxIter2, tmax, tmin, alpha, path)
                 bestPremutation = SA2
                 ammountOfIteration += 1
                 if self.delaySA == 0:
@@ -93,7 +93,7 @@ class SA(ReadData):
         if option == 2:
             while self.delaySA != 0:
                 permutationSA = self.findLongestDelayedTask(bestPremutation, path)
-                SA2 = self.secondSA(permutationSA, maxIteration, tmax, tmin, alpha, path)
+                SA2 = self.secondSA(permutationSA, maxIter2, tmax, tmin, alpha, path)
                 bestPremutation = SA2
                 ammountOfIteration += 1
                 if self.delaySA == 0:
@@ -118,11 +118,13 @@ class SA(ReadData):
         removedElement = permutation[index]
         newPermutation = np.delete(permutation, index)
         _, _, _, _, self.delaySA = self.makeSchedule(newPermutation, path)
-        #print("Lista spoznien dla danych zadan: ", lista_spoznien)
+        print("Lista spoznien dla kazdego zadania: ", lista_spoznien)
         #print("Index wyrzuconej wartości: ", index)
         #print("Usuniete zadanie z permutacji: ", removedElement)
         print("Nowa permutacja: ", newPermutation)
+        print("Ilosc zadan w nowej permutacji: ", len(newPermutation))
         print("Spoznienie w nowej permutacji: ", self.delaySA)
+
         return newPermutation
     def findLongestDelayedTask(self, permutation, path):
         _,_,_,lista_spoznien,delay = self.makeSchedule(permutation,path)
@@ -140,7 +142,9 @@ class SA(ReadData):
         print("Index wyrzuconej wartości: ", index)
         print("Usuniete zadanie z permutacji: ", removedElement)
         print("Nowa permutacja: ", newPermutation)
+        print("Ilosc zadan w nowej permutacji: ", len(newPermutation))
         print("Spoznienie w nowej permutacji: ", self.delaySA)
+
         return newPermutation
 
     def secondSA(self, permutation, maxIteration, tmax, tmin, alpha, path):

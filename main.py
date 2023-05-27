@@ -7,7 +7,7 @@ import TabuSearch
 import SA
 
 # ścieżki do plików testowych
-pathOrder = "daneTestowe\\dane25_4.csv"
+pathOrder = "daneTestowe\\dane100_2.csv"
 pathZasoby = "Dane\\zasoby.csv"
 pathData = "Dane\\dane_sparsowane.txt"
 pathWynik = "Wyniki\\wyniki_" + pathOrder[-12:-4] + ".txt"
@@ -30,13 +30,14 @@ SA_start = time.time()
 symulowane = SA.SA(pathData)
 symulowane.createFirstPermutation(pathData)
 # określenie parametrów dla SA
-maxIterationNumber = 25
+maxIterationNumber = 250
+maxIter2 = 150
 maxTemperature = 1000
 minTemperature = 0.1
 alpha = 0.98
 option = 1
 pathWynikSA2 = "Wyniki\\wyniki_SA_" + pathOrder[-12:-4] + "_option_" + str(option) + ".txt"
-symulowane.SA(symulowane.firstPermutation, maxIterationNumber, maxTemperature, minTemperature, alpha, pathData, option)
+symulowane.SA(symulowane.firstPermutation, maxIterationNumber, maxTemperature, minTemperature, alpha, pathData, option, maxIter2)
 SA_end = time.time()
 duration_SA = SA_end - SA_start
 symulowane.result(pathData,pathWynikSA2)
