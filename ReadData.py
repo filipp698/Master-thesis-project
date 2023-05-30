@@ -1,5 +1,8 @@
 import numpy as np
-class ReadData:
+from Parse import Parse
+
+
+class ReadData(Parse):
     u = [] #lista urządzeń
     Sj = [] #momenty rozpoczęcia
     Cj = [] #momenty zakończenia

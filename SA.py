@@ -4,6 +4,7 @@ import math
 import csv
 import numpy as np
 from ReadData import ReadData
+#import Parse
 
 
 class SA(ReadData):
@@ -197,6 +198,20 @@ class SA(ReadData):
             file.write('Ilosc zadan zrealizowanych: ' + str(len(self.bestPermutation)) + '\n')
             file.write('Czas trwania iteracji wynosi: ' + str(self.durationOfIteration) + " [s]" + '\n')
             file.write('Czas trwania algorytmu: ' + str(round(self.durationSA, 3)) + " [s]" + '\n')
+    def result_system(self,path,pathWynik):
+        u, Sj, Cj, Tj, delaySA = self.makeSchedule(self.bestPermutation, path)
+        #u2 = [[self.slowo[str(element)][0] for element in grupa] for grupa in u]
+        print(u2)
+        print("Lista urządzeń", u)
+        with open(pathWynik, "w") as file:
+            for i in range(len(Sj)):
+                file.write("Zad " + str(self.bestPermutation[i]) + ":" + "\n")
+                nr = int(self.bestPermutation[i])
+                file.write("Start zadania: " + str(Sj[i]) + "\n")
+                file.write("Koniec zadania: " + str(Cj[i]) + "\n")
+                #file.write("Lista zasobów: " + str(u[nr-1]) + "\n")
+                #file.write("Lista zasobów: " + str(u2[nr - 1]) + "\n")
+            file.write('Ilość możliwych zadań do zrealizowania łącznie: ' + str(len(self.bestPermutation)) + '\n')
 
     def generateRandomPermutation(self, permutation):
         permutation = np.random.permutation(permutation)
