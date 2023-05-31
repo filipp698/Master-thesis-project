@@ -4,7 +4,6 @@ import math
 import csv
 import numpy as np
 from ReadData import ReadData
-#import Parse
 
 
 class SA(ReadData):
@@ -37,13 +36,13 @@ class SA(ReadData):
             newTour[j:i + 1] = np.flip(partToFlip)
         return newTour
 
-    def SA(self, initialPermutation, maxIteration, tmax, tmin, alpha, path, option, maxIter2):
+    def SA(self, initialPermutation, maxIteration, tmax, tmin, alpha, path, option,maxIterSA):
         start1 = time.time()
         temp = tmax
         currentPermutation = initialPermutation
         _, _, _, _, currentDelay = self.makeSchedule(currentPermutation, path)
         self.bestPermutation = currentPermutation
-        _, _, _, _, self.bestDelay = self.makeSchedule(initialPermutation, path)
+        #z_, _, _, _, self.bestDelay = self.makeSchedule(initialPermutation, path)
         self.bestDelay = currentDelay
 
         while (temp > tmin):
@@ -82,7 +81,7 @@ class SA(ReadData):
         if option == 1:
             while self.delaySA != 0:
                 permutationSA = self.findLongestTasks(bestPremutation, path)
-                SA2 = self.secondSA(permutationSA, maxIter2, tmax, tmin, alpha, path)
+                SA2 = self.secondSA(permutationSA, maxIterSA, tmax, tmin, alpha, path)
                 bestPremutation = SA2
                 ammountOfIteration += 1
                 if self.delaySA == 0:
@@ -94,7 +93,7 @@ class SA(ReadData):
         if option == 2:
             while self.delaySA != 0:
                 permutationSA = self.findLongestDelayedTask(bestPremutation, path)
-                SA2 = self.secondSA(permutationSA, maxIter2, tmax, tmin, alpha, path)
+                SA2 = self.secondSA(permutationSA, maxIterSA, tmax, tmin, alpha, path)
                 bestPremutation = SA2
                 ammountOfIteration += 1
                 if self.delaySA == 0:
@@ -119,13 +118,12 @@ class SA(ReadData):
         removedElement = permutation[index]
         newPermutation = np.delete(permutation, index)
         _, _, _, _, self.delaySA = self.makeSchedule(newPermutation, path)
-        print("Lista spoznien dla kazdego zadania: ", lista_spoznien)
-        #print("Index wyrzuconej wartości: ", index)
-        #print("Usuniete zadanie z permutacji: ", removedElement)
+        print("Lista spoznien dla danych zadan: ", lista_spoznien)
+        print("Index wyrzuconej wartości: ", index)
+        print("Usuniete zadanie z permutacji: ", removedElement)
         print("Nowa permutacja: ", newPermutation)
-        print("Ilosc zadan w nowej permutacji: ", len(newPermutation))
+        print("Aktualna ilosc zadan: ", len(newPermutation))
         print("Spoznienie w nowej permutacji: ", self.delaySA)
-
         return newPermutation
     def findLongestDelayedTask(self, permutation, path):
         _,_,_,lista_spoznien,delay = self.makeSchedule(permutation,path)
@@ -143,9 +141,8 @@ class SA(ReadData):
         print("Index wyrzuconej wartości: ", index)
         print("Usuniete zadanie z permutacji: ", removedElement)
         print("Nowa permutacja: ", newPermutation)
-        print("Ilosc zadan w nowej permutacji: ", len(newPermutation))
+        print("Aktualna ilosc zadan: ", len(newPermutation))
         print("Spoznienie w nowej permutacji: ", self.delaySA)
-
         return newPermutation
 
     def secondSA(self, permutation, maxIteration, tmax, tmin, alpha, path):
@@ -196,22 +193,31 @@ class SA(ReadData):
                 file.write(str(u[nr-1]) + "\n")
             file.write('Suma spoznien wynosi: ' + str(delaySA) + '\n')
             file.write('Ilosc zadan zrealizowanych: ' + str(len(self.bestPermutation)) + '\n')
+            file.write('Ostateczna premutacja: ' + str(self.bestPermutation) + '\n')
             file.write('Czas trwania iteracji wynosi: ' + str(self.durationOfIteration) + " [s]" + '\n')
             file.write('Czas trwania algorytmu: ' + str(round(self.durationSA, 3)) + " [s]" + '\n')
+
     def result_system(self,path,pathWynik):
         u, Sj, Cj, Tj, delaySA = self.makeSchedule(self.bestPermutation, path)
-        #u2 = [[self.slowo[str(element)][0] for element in grupa] for grupa in u]
-        print(u2)
-        print("Lista urządzeń", u)
+        #print("Lista urządzeń", u)
+        # zamiana kluczy i wartości ze słownika słowo na wartość-klucz
+        odwzorowanie = {str(value): key for key, values in self.slownik2.items() for value in values}
+        # zamiana listy urządzeń na format z nowego słownika (odwzorowanie)
+        u_reparse = [[odwzorowanie[str(element)] for element in grupa] for grupa in u]
+        #print(u_reparse)
+        sortedPermutation = sorted(self.bestPermutation, key=int)
+        print(self.bestPermutation)
+        print(sortedPermutation)
+        bestPremutation = self.bestPermutation.tolist()
         with open(pathWynik, "w") as file:
             for i in range(len(Sj)):
-                file.write("Zad " + str(self.bestPermutation[i]) + ":" + "\n")
-                nr = int(self.bestPermutation[i])
-                file.write("Start zadania: " + str(Sj[i]) + "\n")
-                file.write("Koniec zadania: " + str(Cj[i]) + "\n")
-                #file.write("Lista zasobów: " + str(u[nr-1]) + "\n")
-                #file.write("Lista zasobów: " + str(u2[nr - 1]) + "\n")
-            file.write('Ilość możliwych zadań do zrealizowania łącznie: ' + str(len(self.bestPermutation)) + '\n')
+                file.write("Zad " + str(sortedPermutation[i]) + ":" + "\n")
+                nr_zad = int(sortedPermutation[i])
+                index = bestPremutation.index(nr_zad)
+                file.write("Start zadania: " + str(Sj[index]) + "\n")
+                file.write("Koniec zadania: " + str(Cj[index]) + "\n")
+                file.write(str(u_reparse[nr_zad-1]) + "\n")
+            file.write('Ilosc zadan łacznie zrealizowanych: ' + str(len(self.bestPermutation)) + '\n')
 
     def generateRandomPermutation(self, permutation):
         permutation = np.random.permutation(permutation)
