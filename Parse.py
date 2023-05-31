@@ -1,6 +1,7 @@
 import csv
 
 class Parse:
+    slowo = {}
     #klucz i wartość
     # slownik = {"-":0,'n1':1,'n3':2,'n5':3,'n8':4,'n14':5,'n20':6,'n28':7,'n40':8,'n41':9,'n47':10,'n77':11,'n78':12,
     #             'b1':13,'b3':14,'b5':15,'b8':16,'b14':17,'b20':18,'b28':19,'b40':20,'b41':21,'b47':22,'b77':23}
@@ -18,7 +19,8 @@ class Parse:
         iloscRU = []
         numerZasobu = []
         kodZasobu = []
-        inne =[]
+        inne = []
+
         #odczyt danych z zasobami
         with open(pathZasoby) as zasoby:
             reader = csv.DictReader(zasoby, delimiter=";")
@@ -30,9 +32,12 @@ class Parse:
         for i, value in enumerate(kodZasobu):
             if value in slownik:
                 slownik[value].append(numerZasobu[i])
+                self.slowo[value].append(numerZasobu[i])
             else:
                 slownik[value] = [numerZasobu[i]]
+                self.slowo[value] = [numerZasobu[i]]
         #print(slownik)
+        print(self.slowo)
 
         #odczyt danych zamówień
         with open(pathOder) as daneOrder:
