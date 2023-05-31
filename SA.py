@@ -4,6 +4,8 @@ import math
 import csv
 import numpy as np
 from ReadData import ReadData
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 
 class SA(ReadData):
@@ -16,6 +18,7 @@ class SA(ReadData):
     delaySA = 9999
     bestSecondDelay = 9999
     bestSecondPermutation = []
+    removedElements = []
 
     # def __init__(self):
     #     pass
@@ -25,7 +28,9 @@ class SA(ReadData):
         #self.firstPermutation = self.generateRandomPermutation(permutation)
         self.firstPermutation = permutation
         self.n = iloscZamowien
-
+    def generateRandomPermutation(self, permutation):
+        permutation = np.random.permutation(permutation)
+        return permutation
     def swap(self, currentTour, i, j):
         newTour = np.copy(currentTour)
         if i <= j:
@@ -100,7 +105,7 @@ class SA(ReadData):
                     print("Spoznienie rowne jest 0")
             print("Permutacja ostateczna: ", SA2)
             print("Dlugosc ostatecznej premutacji: ", len(SA2))
-            print("Ilosc iteracji petli while: ", ammountOfIteration)
+            #print("Ilosc iteracji petli while: ", ammountOfIteration)
         end1 = time.time()
         self.durationSA = end1 - start1
         self.bestPermutation = SA2
@@ -116,6 +121,7 @@ class SA(ReadData):
         minDelay = min(lista_spoznien)  # wartość spoźnienia, które daje najwieksze efekty
         index = lista_spoznien.index(minDelay)
         removedElement = permutation[index]
+        self.removedElements.append(removedElement)
         newPermutation = np.delete(permutation, index)
         _, _, _, _, self.delaySA = self.makeSchedule(newPermutation, path)
         print("Lista spoznien dla danych zadan: ", lista_spoznien)
@@ -135,11 +141,13 @@ class SA(ReadData):
         #print(delayedTask)
         index = lista_spoznien.index(delayedTask)
         removedElement = permutation[index]
+        self.removedElements.append(removedElement)
         newPermutation = np.delete(permutation, index)
         _, _, _, _, self.delaySA = self.makeSchedule(newPermutation, path)
         print("Lista przeterminowanych zadan: ", lista_spoznien)
         print("Index wyrzuconej wartości: ", index)
         print("Usuniete zadanie z permutacji: ", removedElement)
+
         print("Nowa permutacja: ", newPermutation)
         print("Aktualna ilosc zadan: ", len(newPermutation))
         print("Spoznienie w nowej permutacji: ", self.delaySA)
@@ -201,26 +209,57 @@ class SA(ReadData):
         u, Sj, Cj, Tj, delaySA = self.makeSchedule(self.bestPermutation, path)
         #print("Lista urządzeń", u)
         # zamiana kluczy i wartości ze słownika słowo na wartość-klucz
-        odwzorowanie = {str(value): key for key, values in self.slownik2.items() for value in values}
+        dictionary = {str(value): key for key, values in self.slownik2.items() for value in values}
         # zamiana listy urządzeń na format z nowego słownika (odwzorowanie)
-        u_reparse = [[odwzorowanie[str(element)] for element in grupa] for grupa in u]
+        u_reparse = [[dictionary[str(element)] for element in group] for group in u]
         #print(u_reparse)
         sortedPermutation = sorted(self.bestPermutation, key=int)
-        print(self.bestPermutation)
-        print(sortedPermutation)
+        #print(self.bestPermutation)
+        #print(sortedPermutation)
         bestPremutation = self.bestPermutation.tolist()
+        tasks = []
+        timesOfStart = []
+        timesOfFinish = []
+
         with open(pathWynik, "w") as file:
             for i in range(len(Sj)):
-                file.write("Zad " + str(sortedPermutation[i]) + ":" + "\n")
+                file.write("Zad nr " + str(sortedPermutation[i]) + ":" + "\n")
+                tasks.append("Zad " + str(sortedPermutation[i]))
                 nr_zad = int(sortedPermutation[i])
                 index = bestPremutation.index(nr_zad)
-                file.write("Start zadania: " + str(Sj[index]) + "\n")
+                file.write("Rozpoczęcie zadania: " + str(Sj[index]) + ", ")
                 file.write("Koniec zadania: " + str(Cj[index]) + "\n")
-                file.write(str(u_reparse[nr_zad-1]) + "\n")
-            file.write('Ilosc zadan łacznie zrealizowanych: ' + str(len(self.bestPermutation)) + '\n')
+                timesOfStart.append(int(Sj[index]))
+                timesOfFinish.append(int(Cj[index]))
+                file.write("Lista niezbędnych zasobów: " + str(u_reparse[nr_zad-1]) + "\n")
+            file.write('\n' + 'Liczba możliwych zadań do zrealizowania: ' + str(len(self.bestPermutation)) + '\n')
+            file.write('Niezrealizowane zadania: ' + str(self.removedElements) + '\n')
+        #print("Zadania", tasks)
+        #print("Start", timesOfStart)
+        #print("Koniec", timesOfFinish)
+        # Tworzenie wykresu Gantta
+        if len(tasks) > 30:
+            fig = plt.figure(figsize=(8,8))
+        else:
+            fig = plt.figure()
+        ax = fig.add_subplot(1, 1, 1)
+        #fig, ax = plt.subplots()
+        cmap = cm.get_cmap('rainbow', len(tasks))
+        #custom_colors = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'cyan', 'magenta', 'gray', 'brown']
+        for i in range(len(tasks)):
+            ax.broken_barh([(timesOfStart[i], timesOfFinish[i] - timesOfStart[i])], (10 * i, 7), facecolors=cmap(i))
 
-    def generateRandomPermutation(self, permutation):
-        permutation = np.random.permutation(permutation)
-        return permutation
+        # Konfiguracja osi
+        ax.set_ylim(0, 10 * len(tasks))
+        ax.set_xlim(0, max(timesOfFinish))
+        ax.set_xlabel('Czas [tyg]')
+        #ax.set_ylabel('Numer zadania')
+        ax.set_title('Wykres Gantta')
+        #ax.yaxis.set_tick_params(labelsize=8)
+        ax.set_yticks([10 * i + 5 for i in range(len(tasks))])
+        ax.set_yticklabels(tasks)
+        plt.show()
+
+
 
 
