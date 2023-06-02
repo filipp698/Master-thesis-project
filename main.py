@@ -37,7 +37,7 @@ minTemperature = 0.1
 alpha = 0.98
 option = 2
 pathWynikSA2 = "Wyniki\\wyniki_SA_" + pathOrder[-12:-4] + "_option_" + str(option) + ".txt"
-pathAplikacja = "Aplikacja\\System_wsadowy_" + pathOrder[-12:-4] + "_option_" + str(option) + ".txt"
+pathAplikacja = "Aplikacja\\System_wsadowy_" + pathOrder[-12:-4] + "_option_" + str(option) + ".csv"
 symulowane.SA(symulowane.firstPermutation, maxIterationNumber, maxTemperature, minTemperature, alpha, pathData, option, maxIter2)
 SA_end = time.time()
 duration_SA = SA_end - SA_start

@@ -220,24 +220,44 @@ class SA(ReadData):
         tasks = []
         timesOfStart = []
         timesOfFinish = []
+        dane = [] #przygotowanie listy danych do zapisu
+        for i in range(len(sortedPermutation)):
+            nr_zad = str(sortedPermutation[i])
+            tasks.append("Zad " + str(sortedPermutation[i]))
+            index = bestPremutation.index(int(nr_zad))
+            start = str(Sj[index])
+            finish = str(Cj[index])
+            zasoby = str(u_reparse[int(nr_zad) - 1])
+            timesOfStart.append(int(Sj[index]))
+            timesOfFinish.append(int(Cj[index]))
+            wiersz = [nr_zad, start, finish, zasoby]
+            dane.append(wiersz)
+        addData1 = ['Zrealizowane zadania:', str(len(self.bestPermutation))]
+        addData2 = ['Niezrealizowane zadania:', str(self.removedElements)]
 
-        with open(pathWynik, "w") as file:
-            for i in range(len(Sj)):
-                file.write("Zad nr " + str(sortedPermutation[i]) + ":" + "\n")
-                tasks.append("Zad " + str(sortedPermutation[i]))
-                nr_zad = int(sortedPermutation[i])
-                index = bestPremutation.index(nr_zad)
-                file.write("Rozpoczęcie zadania: " + str(Sj[index]) + ", ")
-                file.write("Koniec zadania: " + str(Cj[index]) + "\n")
-                timesOfStart.append(int(Sj[index]))
-                timesOfFinish.append(int(Cj[index]))
-                file.write("Lista niezbędnych zasobów: " + str(u_reparse[nr_zad-1]) + "\n")
-            file.write('\n' + 'Liczba możliwych zadań do zrealizowania: ' + str(len(self.bestPermutation)) + '\n')
-            file.write('Niezrealizowane zadania: ' + str(self.removedElements) + '\n')
-        #print("Zadania", tasks)
-        #print("Start", timesOfStart)
-        #print("Koniec", timesOfFinish)
-        # Tworzenie wykresu Gantta
+        with open(pathWynik, 'w', newline='') as plik_csv:
+            writer = csv.writer(plik_csv)
+            writer.writerow(['Zadanie', 'Rozpoczecie', 'Zakonczenie', 'Zasoby'])
+            writer.writerows(dane)
+            writer.writerow(addData1)
+            writer.writerow(addData2)
+
+        ## zapis do pliku txt
+        # with open(pathWynik, "w") as file:
+        #     for i in range(len(Sj)):
+        #         file.write("Zad nr " + str(sortedPermutation[i]) + ":" + "\n")
+        #         tasks.append("Zad " + str(sortedPermutation[i]))
+        #         nr_zad = int(sortedPermutation[i])
+        #         index = bestPremutation.index(nr_zad)
+        #         file.write("Rozpoczęcie zadania: " + str(Sj[index]) + ", ")
+        #         file.write("Koniec zadania: " + str(Cj[index]) + "\n")
+        #         timesOfStart.append(int(Sj[index]))
+        #         timesOfFinish.append(int(Cj[index]))
+        #         file.write("Lista niezbędnych zasobów: " + str(u_reparse[nr_zad-1]) + "\n")
+        #     file.write('\n' + 'Liczba możliwych zadań do zrealizowania: ' + str(len(self.bestPermutation)) + '\n')
+        #     file.write('Niezrealizowane zadania: ' + str(self.removedElements) + '\n')
+
+        # # Tworzenie wykresu Gantta
         if len(tasks) > 30:
             fig = plt.figure(figsize=(8,8))
         else:
